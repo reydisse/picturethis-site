@@ -1,0 +1,17 @@
+{
+  "name": "picturethis-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "astro build",
+    "dev": "astro dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "astro": "^7.4.13"
+  }
+}
