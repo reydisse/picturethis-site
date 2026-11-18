@@ -5,4 +5,4 @@ export async function getStaticPaths(){return (await getCollection('partners',({
 const {post}=Astro.props; const {Content}=await render(post);
 const related=(await getCollection('partners',({data})=>!data.draft)).filter(x=>x.id!==post.id).slice(0,3);
 ---
-<Site><article><h1>{post.data.title}</h1><p>{post.data.author}</p>{post.data.photo && <figure><img src={post.data.photo} alt=""/><figcaption>{post.data.photo_caption}</figcaption></figure>}{post.data.pull_quote && <blockquote>{post.data.pull_quote}</blockquote>}<Content/><aside><a href="/get-involved/">Get involved</a></aside>{related.map(x=><p><a href={"/partners/"+x.id+"/"}>{x.data.title}</a></p>)}</article></Site>
+<Site title={post.data.title}><article><h1>{post.data.title}</h1><p>{post.data.author}</p>{post.data.photo && <figure><img src={post.data.photo} alt=""/><figcaption>{post.data.photo_caption}</figcaption></figure>}{post.data.pull_quote && <blockquote>{post.data.pull_quote}</blockquote>}<Content/><aside><a href="/get-involved/">Get involved</a></aside>{related.map(x=><p><a href={"/partners/"+x.id+"/"}>{x.data.title}</a></p>)}</article></Site>

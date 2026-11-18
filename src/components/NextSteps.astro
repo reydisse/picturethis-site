@@ -1,6 +1,6 @@
 ---
 const path=Astro.url.pathname;
 const map={programs:['Faithfire','Get Involved'],faithfire:['Projects','Programs'],projects:['Faithfire','Get Involved'],events:['Programs','Get Involved'],partners:['Get Involved','Donate'],'get-involved':['Programs','Donate'],donate:['Get Involved','Our standards & policies'],policies:['Get Involved','Home'],blog:['Projects','Events','Faithfire']};
-const key=path.split('/')[1];const links=map[key] || ['Programs','Get Involved'];
+const key=path.split('/')[1];const links=Astro.props.links || map[key] || ['Programs','Get Involved'];
 ---
 <section class="next-steps"><p class="eyebrow">Explore further</p><div>{links.map(label=><a href={label==='Home'?'/':'/'+(label==='Our standards & policies'?'policies':label.toLowerCase().replaceAll(' ','-'))+'/'}>{label}<span aria-hidden="true">↗</span></a>)}</div></section>

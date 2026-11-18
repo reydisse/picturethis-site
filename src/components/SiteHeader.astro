@@ -1,6 +1,6 @@
 ---
 const path=Astro.url.pathname.replace(/\/$/,'') || '/';
-const links=[['/','Home'],['/programs','Programs'],['/faithfire','Faithfire'],['/projects','Projects'],['/blog','Blog'],['/events','Events'],['/partners','Partners'],['/get-involved','Get Involved'],['/donate','Donate'],['/policies','Our standards & policies']];
+const links=[['/','Home'],['/programs','Programs'],['/faithfire','Faithfire'],['/projects','Projects'],['/blog','Blog'],['/events','Events'],['/partners','Partners'],['/get-involved','Get Involved'],['/donate','Donate']];
 ---
 <header class="site-header" id="top"><a class="masthead" href="/">PICTURETHIS /<br/>PRODUCTION<small>Youth. Production. Opportunity.</small></a><button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button><nav id="primary-nav" aria-label="Primary navigation">{links.map(([url,label])=><a class:list={{action:url==='/get-involved',donate:url==='/donate'}} href={url==='/'?url:url+'/'} aria-current={(path===url || (url==='/projects' && path.startsWith('/projects/'))) ? 'page':undefined}>{label}</a>)}</nav><a class="mobile-action" href="/donate/">Donate</a></header>
 <script>
