@@ -1,6 +1,4 @@
 ---
 import Site from '../layouts/Site.astro';
-import {getCollection} from 'astro:content';
-const posts=await getCollection('events', ({data})=>!data.draft);
 ---
-<Site><section><h1>Events</h1><div class="cards">{posts.map(post=><article><a href={"/events/"+post.id+"/"}>{post.data.photo && <figure><img src={post.data.photo} alt=""/><figcaption>{post.data.photo_caption}</figcaption></figure>}<h2>{post.data.title}</h2></a><p>{post.data.summary}</p></article>)}</div></section></Site>
+<Site><section><p class="eyebrow">Events</p><h1>Get together. Get hands on.</h1><p>No public event dates are confirmed in this draft. Please check with the team before travelling.</p><div class="row split"><p class="eyebrow">JAN.</p><div><h2>Next training cohort</h2><p>Source-listed January intake · year and availability to be reconfirmed. Saturdays, 10:00 AM–2:00 PM. Free, with gear provided and twenty places. Faithfire Production, 139 Millwick Dr, and partner venues across the GTA.</p></div></div><div class="row split"><p class="eyebrow">TBC.</p><div><h2>Meet the crew: open session</h2><p>Proposed event, not open for booking. An introduction to the equipment, the course and mentoring for young people and community workers. Date, venue and access details will be published once agreed.</p></div></div><figure><img src="https://doop.design/photos/pexels/13312280.jpeg?h=650&w=940" alt=""/><figcaption>Illustrative photography</figcaption></figure></section></Site>
