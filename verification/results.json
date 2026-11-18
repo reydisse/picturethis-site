@@ -1,0 +1,50 @@
+[
+  {
+    "route": "home",
+    "width": 1440,
+    "scroll": 1440,
+    "broken": []
+  },
+  {
+    "route": "donate",
+    "width": 1440,
+    "scroll": 1440,
+    "broken": []
+  },
+  {
+    "route": "programs",
+    "width": 1440,
+    "scroll": 1440,
+    "broken": []
+  },
+  {
+    "route": "faithfire",
+    "width": 1440,
+    "scroll": 1440,
+    "broken": []
+  },
+  {
+    "route": "home",
+    "width": 375,
+    "scroll": 375,
+    "broken": []
+  },
+  {
+    "route": "donate",
+    "width": 375,
+    "scroll": 375,
+    "broken": []
+  },
+  {
+    "route": "programs",
+    "width": 375,
+    "scroll": 375,
+    "broken": []
+  },
+  {
+    "route": "faithfire",
+    "width": 375,
+    "scroll": 375,
+    "broken": []
+  }
+]
