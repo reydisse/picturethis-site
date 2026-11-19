@@ -37,19 +37,41 @@ document.querySelectorAll('[data-testimonial-track]').forEach(track => {
  const slides = [...track.children].filter(el => el.tagName === 'FIGURE');
  const motion = matchMedia('(prefers-reduced-motion: reduce)');
  let index = 0, timer;
- const show = () => slides.forEach((slide, i) => {
-  slide.dataset.active = String(i === index);
-  slide.setAttribute('aria-hidden', String(i !== index));
-  slide.inert = i !== index;
- });
+ const band = track.closest('#stories');
+ const controls = document.createElement('div');
+ controls.className = 'testimonial-controls';
+ const button = (label, text, action, className = 'story-control') => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = className; b.setAttribute('aria-label', label);
+  b.textContent = text; b.addEventListener('click', action); controls.append(b); return b;
+ };
+ const choose = i => { index = (i + slides.length) % slides.length; show(); start(); };
+ button('Previous testimonial', '←', () => choose(index - 1));
+ const dots = slides.map((slide, i) => button(`Show testimonial ${i + 1}`, '', () => choose(i), 'testimonial-dot'));
+ button('Next testimonial', '→', () => choose(index + 1));
+ track.after(controls);
+ controls.style.gridColumn = '2';
+ // Keep controls with the quote in both desktop and single-column layouts.
+ const wrapper = document.createElement('div'); wrapper.style.minWidth = '0';
+ track.before(wrapper); wrapper.append(track, controls); controls.style.gridColumn = '';
+ const measure = () => { track.style.height = `${slides[index].getBoundingClientRect().height}px`; };
+ const show = () => {
+  slides.forEach((slide, i) => {
+   slide.dataset.active = String(i === index);
+   slide.setAttribute('aria-hidden', String(i !== index)); slide.inert = i !== index;
+   dots[i].setAttribute('aria-pressed', String(i === index));
+  });
+  measure();
+ };
+ new ResizeObserver(measure).observe(wrapper);
+ document.fonts.ready.then(measure);
  const stop = () => clearInterval(timer);
  const start = () => {
   stop();
-  if (motion.matches) { index = 0; show(); return; }
+  if (motion.matches) return;
   if (slides.length < 2 || track.closest('#stories').matches(':hover, :focus-within')) return;
   timer = setInterval(() => { index = (index + 1) % slides.length; show(); }, 12000);
  };
- const band = track.closest('#stories');
  band.addEventListener('mouseenter', stop);
  band.addEventListener('mouseleave', start);
  band.addEventListener('focusin', stop);
