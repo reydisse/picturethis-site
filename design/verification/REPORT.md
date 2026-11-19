@@ -1,24 +1,25 @@
-# Live verification — November 19, 2026
+# Live fidelity gate — 2026-11-19
 
-Deployment repaired with Wrangler direct production upload. Deployment list had no entries for f9fd586 or b01e017; latest production source was ad93945. No failed build for those commits was available to inspect. The Git integration did not create deployments; its underlying trigger failure is not established. Local Astro build succeeds. Direct deployment: https://765fd585.picturethis-site.pages.dev . DNS and domain settings untouched.
+Implementation commit: a900d92. Pushed main, then Wrangler direct production upload (`npx wrangler pages deploy dist --project-name picturethis-site --branch main`). Deployment: https://9646d0d6.picturethis-site.pages.dev . DNS and custom-domain settings untouched.
 
-Fresh hard-reload Chromium screenshots: home-1440.png and home-390.png. Live stylesheet is new (see results.json); old civic.Bj4sQHHd.css is no longer served. Width checks at 1440, 390 and 375 found no horizontal overflow.
+Live stylesheet changed from civic.ivG9SyPe.css to civic.CCOk4T4V.css on both production hosts. Fresh full-page Chromium captures overwrite home-1440.png and home-390.png. Measured document width equals viewport at 1440, 390 and 375. Build passes. Checked https://picturethis-site.pages.dev/ , https://picturethis-production.com/ , https://picturethis-site.pages.dev/programs/ and https://picturethis-site.pages.dev/faithfire/ (200). Evidence: results.json.
 
-Fidelity gate: NOT PASSED. This is a deployed improvement, not a completed frame match.
+Gate: PARTIAL, not a pixel-identical frame match. Composition implemented; frozen copy and available photographs constrain fidelity.
 
-- Hero: partial. Split pale text / colour photo and blue caption implemented. Frozen long vision and mission require a taller stage than the frame.
-- Eyebrow and cohort: partial. Placement and blue cohort strip retained; eyebrow remains existing frozen wording.
-- Why: mismatch. Three-column beliefs on desktop, but photo-left composition and vision/mission leads remain missing.
-- Program: partial. Editorial numbered rows; model preserved across program and pathways. Photo/pale companion panel missing.
-- Pathways: partial. Distinct blue band and two numbered management items implemented; frozen headings retained.
-- Standards: partial. White ruled standards restored; photo-left composition missing.
-- Testimonial: partial. Separate pale band, full Veronica testimonial retained. Long real quotation changes height.
-- Get involved: partial. White three-column section and outline action implemented; frozen combined partner/donate copy retained.
-- FAQ: mismatch. Not implemented; foundation answers require further source mapping.
-- Closing: partial. Pale split and explicitly disabled non-sending form preview implemented. January frozen heading retained.
-- Footer: partial. Blue wordmark/columns and bottom rule implemented with existing links and nonprofit line.
-- Other pages: shared colour photography, responsive typography and blue footer apply to all eleven pages; individual page fidelity not visually audited this run.
+| Section | Verdict | Reason |
+| --- | --- | --- |
+| Masthead/nav | partial | Existing navigation preserved; frozen links differ from draft frame. |
+| Hero | partial | Split stage retained; long frozen vision/mission increases height. |
+| Cohort strip | match | Blue horizontal desktop strip retained, stacked mobile. |
+| Why we exist | partial | Photo left, story and exact existing vision/mission sentences right, bold leads, six numbered beliefs in three columns; frozen story length increases height. |
+| Equipment photos | partial | Existing two-image interlude preserved. |
+| Program | partial | Large existing Programs headline, numbered rows and wide photo/pale companion panel; Pathways frozen paragraph substitutes for absent craft paragraph. |
+| What comes next | match | Sound desk left in blue band, two numbered management items right. |
+| Standards | partial | Photo left, heading and ruled standards right; available control-desk photograph substitutes for headphones/crew essentials. Full Faithfire story retained, increasing height. |
+| Testimonial | partial | Pale band retained; full Veronica quotation is longer than draft. |
+| Get involved | partial | White three-column layout retained; frozen combined partner/donate wording. |
+| Before you join | partial | Two numbered FAQ rows use existing frozen answers; missed-session row omitted because no frozen answer was found. |
+| Closing | partial | Pale split closing and disabled non-sending preview preserved; frozen January heading. |
+| Footer | partial | Blue footer preserved with existing links and nonprofit wording. |
 
-No forbidden draft hero line or placeholder testimonial imported. Existing copy retained; preview labels added for explicit non-sending status.
-
-All checked live URLs and response statuses are recorded verbatim in results.json, including production custom-domain homepage and all eleven Pages routes. All returned 200. Build passes. Screenshots are fresh production captures, not local output.
+No draft testimonial or hero copy imported. Photos remain colour, captions Illustrative photography. Pathways paragraph appears once, inside Program companion panel. FAQ equipment sentence comes verbatim from src/content/blog/eight-weeks-real-gear.md; cost and experience answers reuse existing Home sentences. No new answer invented. Other page source files unchanged; new composition selectors target Home classes.

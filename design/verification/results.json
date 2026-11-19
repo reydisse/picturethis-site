@@ -4,77 +4,47 @@
     "scroll": 1440,
     "css": [
       "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap",
-      "https://picturethis-site.pages.dev/_astro/civic.ivG9SyPe.css"
-    ],
-    "hero": "570.234px 725.75px"
+      "https://picturethis-site.pages.dev/_astro/civic.CCOk4T4V.css"
+    ]
   },
   {
     "width": 390,
     "scroll": 390,
     "css": [
       "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap",
-      "https://picturethis-site.pages.dev/_astro/civic.ivG9SyPe.css"
-    ],
-    "hero": "342px"
+      "https://picturethis-site.pages.dev/_astro/civic.CCOk4T4V.css"
+    ]
   },
   {
     "width": 375,
     "scroll": 375,
     "css": [
       "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap",
-      "https://picturethis-site.pages.dev/_astro/civic.ivG9SyPe.css"
-    ],
-    "hero": "327px"
-  },
-  {
-    "url": "https://picturethis-site.pages.dev/",
-    "status": 200
-  },
-  {
-    "url": "https://picturethis-site.pages.dev/programs/",
-    "status": 200
-  },
-  {
-    "url": "https://picturethis-site.pages.dev/faithfire/",
-    "status": 200
-  },
-  {
-    "url": "https://picturethis-site.pages.dev/projects/",
-    "status": 200
-  },
-  {
-    "url": "https://picturethis-site.pages.dev/projects/cue-and-a/",
-    "status": 200
-  },
-  {
-    "url": "https://picturethis-site.pages.dev/blog/",
-    "status": 200
-  },
-  {
-    "url": "https://picturethis-site.pages.dev/events/",
-    "status": 200
-  },
-  {
-    "url": "https://picturethis-site.pages.dev/partners/",
-    "status": 200
-  },
-  {
-    "url": "https://picturethis-site.pages.dev/get-involved/",
-    "status": 200
-  },
-  {
-    "url": "https://picturethis-site.pages.dev/donate/",
-    "status": 200
-  },
-  {
-    "url": "https://picturethis-site.pages.dev/policies/",
-    "status": 200
+      "https://picturethis-site.pages.dev/_astro/civic.CCOk4T4V.css"
+    ]
   },
   {
     "url": "https://picturethis-production.com/",
     "status": 200,
     "css": [
-      "civic.ivG9SyPe.css"
+      "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap",
+      "https://picturethis-production.com/_astro/civic.CCOk4T4V.css"
+    ]
+  },
+  {
+    "url": "https://picturethis-site.pages.dev/programs/",
+    "status": 200,
+    "css": [
+      "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap",
+      "https://picturethis-site.pages.dev/_astro/civic.CCOk4T4V.css"
+    ]
+  },
+  {
+    "url": "https://picturethis-site.pages.dev/faithfire/",
+    "status": 200,
+    "css": [
+      "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap",
+      "https://picturethis-site.pages.dev/_astro/civic.CCOk4T4V.css"
     ]
   }
 ]
