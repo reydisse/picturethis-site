@@ -6,7 +6,7 @@ summary: "What actually happens on Saturdays: a week-by-week look at the Picture
 photo: "https://doop.design/photos/pexels/8412361.jpeg?h=1000&w=1600"
 photo_caption: "Illustrative photography"
 pull_quote: "No classroom theatre. The gear is the same gear our crews use on shows that week."
-draft: true
+draft: false
 ---
 
 # Eight weeks, real gear

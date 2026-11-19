@@ -1,0 +1,4 @@
+---
+const {eyebrow,title,id,alt}=Astro.props;
+---
+<section class="hero inner-hero"><p class="eyebrow">{eyebrow}</p><div class="hero-grid"><div><h1>{title}</h1></div><figure><img src={`https://doop.design/photos/pexels/${id}.jpeg?h=900&w=1200`} alt={alt}/><figcaption>Illustrative photography</figcaption></figure></div></section>

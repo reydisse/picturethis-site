@@ -6,7 +6,7 @@ summary: "What PictureThis promises instead: hours on real gear, honest teaching
 photo: "https://doop.design/photos/pexels/8147313.jpeg?h=1000&w=1600"
 photo_caption: "Illustrative photography"
 pull_quote: "We don't promise jobs. We promise hours on real gear, honest teaching, a reference, and a crew that will say your name when a call comes in."
-draft: true
+draft: false
 ---
 
 # We don't promise jobs

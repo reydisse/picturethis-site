@@ -3,6 +3,9 @@ import Site from '../../layouts/Site.astro';
 import {getCollection,render} from 'astro:content';
 export async function getStaticPaths(){return (await getCollection('blog',({data})=>!data.draft)).map(post=>({params:{id:post.id},props:{post}}));}
 const {post}=Astro.props; const {Content}=await render(post);
-const related=(await getCollection('blog',({data})=>!data.draft)).filter(x=>x.id!==post.id).slice(0,3);
+const related=(await getCollection('blog',({data})=>!data.draft)).filter(x=>x.id!==post.id).slice(0,2);
 ---
-<Site title={post.data.title}><article><h1>{post.data.title}</h1><p>{post.data.author}</p>{post.data.photo && <figure><img src={post.data.photo} alt=""/><figcaption>{post.data.photo_caption}</figcaption></figure>}{post.data.pull_quote && <blockquote>{post.data.pull_quote}</blockquote>}<Content/><aside class="invitation"><h2>Join a cohort</h2><p>Ages 16 to 29, no experience needed. Applications open for January.</p><a href="/get-involved/">Get involved</a></aside>{related.map(x=><p><a href={"/blog/"+x.id+"/"}>{x.data.title}</a></p>)}</article></Site>
+<Site title={post.data.title}><article data-quote={post.data.pull_quote}>{post.data.photo && <figure><img src={post.data.photo} alt={post.data.title + " — production crew at work"}/><figcaption>{post.data.photo_caption}</figcaption></figure>}<h1>{post.data.title}</h1><p>{post.data.author}</p><div class="article-content"><Content/></div><aside class="invitation"><h2>Join a cohort</h2><p>Ages 16 to 29, no experience needed. Applications open for January.</p><a href="/get-involved/">Get involved</a></aside>{related.map(x=><p><a href={"/blog/"+x.id+"/"}>{x.data.title}</a></p>)}</article></Site>
+<script>
+document.querySelectorAll('.article-content').forEach(content=>{const quote=document.createElement('blockquote');quote.textContent=content.closest('article').dataset.quote||'';if(quote.textContent){const first=content.querySelector('p:not(:has(em))');first?.after(quote);}content.querySelectorAll('p:has(> img)').forEach(p=>{const caption=p.nextElementSibling;if(caption?.textContent==='Illustrative photography'){const f=document.createElement('figure');p.before(f);f.append(...p.childNodes);const c=document.createElement('figcaption');c.textContent=caption.textContent;f.append(c);caption.remove();p.remove();}});});
+</script>

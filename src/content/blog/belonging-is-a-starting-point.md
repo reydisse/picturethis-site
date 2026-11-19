@@ -6,7 +6,7 @@ summary: "Why skills and trusted relationships belong in the conversation about 
 photo: "https://doop.design/photos/pexels/11410604.jpeg?h=1000&w=1600"
 photo_caption: "Illustrative photography"
 pull_quote: "A young person deserves more than a warning about what not to do. They deserve meaningful opportunities, people who show up and somewhere to contribute."
-draft: true
+draft: false
 status_note: "Research-informed editorial draft. For review before publication."
 ---
 

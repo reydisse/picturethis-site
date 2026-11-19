@@ -1,6 +1,7 @@
 ---
+import PageHero from "../components/PageHero.astro";
 import Site from '../layouts/Site.astro';
 import {getCollection} from 'astro:content';
 const posts=await getCollection('blog', ({data})=>!data.draft);
 ---
-<Site title="Blog"><section class="page-opening"><h1>Blog</h1>{posts.length===0 && <p>No stories are published yet.</p>}<div class="cards">{posts.map(post=><article><a href={"/blog/"+post.id+"/"}>{post.data.photo && <figure><img src={post.data.photo} alt=""/><figcaption>{post.data.photo_caption}</figcaption></figure>}<h2>{post.data.title}</h2></a><p>{post.data.summary}</p></article>)}</div></section></Site>
+<Site title="Blog"><PageHero eyebrow="News & Articles" title="Blog" id="39579121" alt="Video switcher and production preview monitors"/><section class="page-opening">{posts.length===0 && <p>No stories are published yet.</p>}<div class="cards">{posts.map(post=><article><a href={"/blog/"+post.id+"/"}>{post.data.photo && <figure><img src={post.data.photo} alt={post.data.title + " — illustrative production photography"}/><figcaption>{post.data.photo_caption}</figcaption></figure>}<h2>{post.data.title}</h2></a><p>{post.data.summary}</p></article>)}</div></section></Site>
