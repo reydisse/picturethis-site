@@ -1,9 +1,5 @@
 ---
-import PageHero from "../components/PageHero.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import NextSteps from "../components/NextSteps.astro";
-import "../styles/civic.css";
-import { contactEmail, formEndpoint } from "../config";
+import DesignPage from "../layouts/DesignPage.astro";
+import design from "../design/get-involved.json";
 ---
-<!doctype html><html lang="en-CA"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Get Involved | PictureThis Production</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"/></head><body><a href="#main">Skip to content</a><SiteHeader/><main id="main"><PageHero eyebrow="Get Involved" title="Get involved" id="11410604" alt="Production crew working backstage"/><section class="page-opening"><p></p></section><section><h2>Join a cohort</h2><p>Ages 16 to 29, no experience needed. Applications open for January.</p></section><section><h2>Mentor</h2><p>Working technicians: one participant, monthly check-ins, real shows together. Screening and a code of conduct apply, and we will walk you through both.</p></section><section><h2>Partner or donate</h2><p>Venues, schools, churches and companies: host a training day, lend gear, fund a cohort, or hire our graduates for your calls.</p></section><section><a href={"mailto:"+contactEmail}>{contactEmail}</a></section><section class="inquiry-panel"><h2>Get in touch</h2><form action={formEndpoint || 'mailto:'+contactEmail} method="post" enctype={formEndpoint ? 'application/x-www-form-urlencoded' : 'text/plain'}><label>Name<input name="name" autocomplete="name" required/></label><label>Email<input name="email" type="email" autocomplete="email" required/></label><label>I want to<select name="interest"><option>Join a cohort</option><option>Mentor</option><option>Partner or donate</option></select></label><label>Message<textarea name="message" rows="5" required></textarea></label><button type="submit">Send message</button></form>{!formEndpoint && <p>This form is in preview until a form service is connected. Sending opens your email app.</p>}</section></main><SiteFooter/></body></html>
+<DesignPage title="Get Involved" design={design} />

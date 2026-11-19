@@ -1,12 +1,6 @@
 ---
-const path=Astro.url.pathname.replace(/\/$/,'') || '/';
-const links=[['/','Home'],['/programs','Programs'],['/faithfire','Faithfire'],['/projects','Projects'],['/blog','Blog'],['/events','Events'],['/partners','Partners'],['/get-involved','Get Involved'],['/donate','Donate']];
+import html from "../design/header.html?raw";
+const path=Astro.url.pathname;
+const markup=html.replace(/<a ([^>]*href="([^"#]+)"[^>]*)>/g,(all,attrs,href)=>`<a ${attrs}${(href===path || (href!=="/" && path.startsWith(href))) ? ' aria-current="page"' : ""}>`);
 ---
-<header class="site-header" id="top"><a class="masthead" href="/">PICTURETHIS /<br/>PRODUCTION<small>Youth. Production. Opportunity.</small></a><button class="menu-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button><nav id="primary-nav" aria-label="Primary navigation">{links.map(([url,label])=><a class:list={{action:url==='/get-involved',donate:url==='/donate'}} href={url==='/'?url:url+'/'} aria-current={(path===url || (url==='/projects' && path.startsWith('/projects/'))) ? 'page':undefined}>{label}</a>)}</nav><a class="mobile-action" href="/donate/">Donate</a></header>
-<script>
-const button=document.querySelector('.menu-toggle');const nav=document.querySelector('#primary-nav');
-function close(){button?.setAttribute('aria-expanded','false');nav?.classList.remove('is-open');}
-button?.addEventListener('click',()=>{const open=button.getAttribute('aria-expanded')!=='true';button.setAttribute('aria-expanded',String(open));nav?.classList.toggle('is-open',open);});
-nav?.addEventListener('click',e=>{if((e.target as HTMLElement).closest('a'))close();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){close();(button as HTMLButtonElement)?.focus();}});
-</script>
+<Fragment set:html={markup}/>

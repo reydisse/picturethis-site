@@ -1,4 +1,10 @@
 ---
-const {eyebrow,title,id,alt}=Astro.props;
+const {eyebrow,title}=Astro.props;
 ---
-<section class="hero inner-hero"><p class="eyebrow">{eyebrow}</p><div class="hero-grid"><div><h1>{title}</h1></div><figure><img src={`https://doop.design/photos/pexels/${id}.jpeg?h=900&w=1200`} alt={alt}/><figcaption>Illustrative photography</figcaption></figure></div></section>
+<section class="cpi"><div><p class="cpi-eyebrow">{eyebrow}</p><h1 class="cpi-title">{title}</h1></div></section>
+<style>:root{--color-civic:#203DA5;--color-civic-muted:#536185;--spacing-page:72px;--spacing-section:88px;--spacing-tight:16px;--spacing-wide:48px;--spacing-large:64px;--font-ngo:DM Sans, sans-serif;--text-h3:20px;--text-small:13px;--text-poster:88px}
+.cpi{margin:0 var(--spacing-page);padding:var(--spacing-section) 0 var(--spacing-wide);display:grid;grid-template-columns:1.5fr 1fr;gap:var(--spacing-large);align-items:end;border-bottom:1px solid var(--color-civic);font-family:var(--font-ngo)}
+.cpi-eyebrow{margin:0;font-size:var(--text-small);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-civic)}
+.cpi-title{margin:var(--spacing-tight) 0 0;font-family:"Space Grotesk",sans-serif;font-size:var(--text-poster);line-height:.98;font-weight:500;letter-spacing:-.06em;color:var(--color-civic)}
+.cpi-lede{margin:0;font-size:var(--text-h3);line-height:1.5;color:var(--color-civic-muted);max-width:460px}
+</style>
