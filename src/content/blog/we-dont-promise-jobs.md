@@ -9,9 +9,7 @@ pull_quote: "We don't promise jobs. We promise hours on real gear, honest teachi
 draft: false
 ---
 
-# We don't promise jobs
-
-Plenty of programs promise you a career. We won't make that promise, because it costs nothing to make, and everything to believe.
+**Plenty of programs promise you a career. We won't make that promise, because it costs nothing to make, and everything to believe.**
 
 Here's what we promise instead: hours on real gear at real shows, working to a professional standard. Honest instruction from working technicians, people who mixed, switched, or lit a show this month. A reference from people the industry knows. And a crew that'll say your name when a call comes in.
 

@@ -10,11 +10,10 @@ draft: false
 status_note: "Research-informed editorial draft. For review before publication."
 ---
 
-# Belonging is a starting point
 
 *Why skills and trusted relationships belong in the conversation about youth violence prevention.*
 
-A young person deserves more than a warning about what not to do. They deserve meaningful opportunities, people who show up and somewhere to contribute.
+**A young person deserves more than a warning about what not to do. They deserve meaningful opportunities, people who show up and somewhere to contribute.**
 
 Public Safety Canada identifies limited community attachment, poor educational or employment prospects, and a need for recognition and belonging among factors associated with youth gang involvement. It also makes an essential point: the vast majority of young people never join gangs or become involved in crime. Risk factors are not a verdict on an individual. [1]
 

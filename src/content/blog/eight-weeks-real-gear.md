@@ -9,9 +9,7 @@ pull_quote: "No classroom theatre. The gear is the same gear our crews use on sh
 draft: false
 ---
 
-# Eight weeks, real gear
-
-Every Saturday at 10 AM, twenty young people walk into a working production space, and by 2 PM, they've done a real part of the job. No classroom theatre. The gear is the same gear our crews use on shows that week.
+**Every Saturday at 10 AM, twenty young people walk into a working production space, and by 2 PM, they've done a real part of the job. No classroom theatre. The gear is the same gear our crews use on shows that week.**
 
 Week 1 is all about cables, connectors, and signal flow. You coil, tape, and test every type of cable we own, then trace a signal from a microphone to a speaker and find the break we've hidden in it. Week 2 puts you on digital consoles, the Wing and the X32, building a show file from scratch: inputs, gains, EQ, routing, and scenes.
 
