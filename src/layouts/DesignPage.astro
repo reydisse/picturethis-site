@@ -31,3 +31,30 @@ document.querySelectorAll('section:has(.amt)').forEach(section => {
  if (selected) selected.click();
 });
 </script>
+
+<script is:inline>
+document.querySelectorAll('[data-testimonial-track]').forEach(track => {
+ const slides = [...track.children].filter(el => el.tagName === 'FIGURE');
+ const motion = matchMedia('(prefers-reduced-motion: reduce)');
+ let index = 0, timer;
+ const show = () => slides.forEach((slide, i) => {
+  slide.dataset.active = String(i === index);
+  slide.setAttribute('aria-hidden', String(i !== index));
+  slide.inert = i !== index;
+ });
+ const stop = () => clearInterval(timer);
+ const start = () => {
+  stop();
+  if (motion.matches) { index = 0; show(); return; }
+  if (slides.length < 2 || track.closest('#stories').matches(':hover, :focus-within')) return;
+  timer = setInterval(() => { index = (index + 1) % slides.length; show(); }, 12000);
+ };
+ const band = track.closest('#stories');
+ band.addEventListener('mouseenter', stop);
+ band.addEventListener('mouseleave', start);
+ band.addEventListener('focusin', stop);
+ band.addEventListener('focusout', () => setTimeout(start, 0));
+ motion.addEventListener('change', start);
+ show(); start();
+});
+</script>
