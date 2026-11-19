@@ -56,3 +56,23 @@ main>.hero{padding-top:40px;padding-bottom:64px}.hero-grid{margin-top:40px}.hero
 main>.split{padding-top:64px;padding-bottom:64px}.numbered>div{border-color:currentColor}.crew blockquote{font-size:clamp(28px,3.6vw,52px);line-height:1.15}.page-opening{border-top:1px solid var(--color-civic-line)}
 .gift-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}.gift-card{padding:24px 0;border-top:1px solid var(--color-civic);margin:0}.gift-card h3 span{display:block;font-size:64px;margin-bottom:24px}.monthly-band{background:var(--color-civic-soft)}
 @media(max-width:768px){.gift-grid{grid-template-columns:1fr}.hero-grid{margin-top:24px}main>.hero,main>.split{padding:32px 24px}}
+
+/* Authoritative departure frame KX0zaLcbeM: image-led stage and civic bands. */
+main>section:nth-child(even){background:white}
+img{filter:none}
+main>.hero{padding:40px 72px 32px}
+.hero-grid{background:var(--color-civic-soft);grid-template-columns:44% 56%;gap:0;align-items:stretch;min-height:744px;margin-top:24px}
+.hero-grid>div{padding:48px 40px}
+.hero h1{font-size:clamp(32px,3.4vw,49px);line-height:1.04}
+.hero .lead{font-size:16px}.hero .lead h2{font-size:24px}
+.hero figure{margin:0;position:relative}.hero figure img{height:100%;min-height:744px}.hero figcaption{position:absolute;bottom:0;left:0;right:0;margin:0;padding:16px 24px;background:var(--color-civic);color:white}
+main>.split{padding:88px 72px;grid-template-columns:1fr 2.5fr;gap:64px}
+.values{display:grid;grid-template-columns:1fr 1fr;gap:0 40px}.values h2{font-size:28px}
+main>.soft{background:white;border-top:1px solid var(--color-civic-line);padding-top:88px;padding-bottom:88px}
+main>.crew{background:var(--color-civic);color:white}.crew p{color:inherit}.crew h2{font-size:clamp(32px,4.45vw,64px)}.crew blockquote{background:var(--color-civic-soft);color:var(--color-civic);padding:40px;font-size:28px}
+main>.involved{background:white;color:var(--color-civic);padding-top:88px;padding-bottom:88px}.involved .button{background:var(--color-civic);color:white}.poster{background:var(--color-civic-soft)}
+nav a,.button,button{min-height:44px}h1{font-size:clamp(36px,4.45vw,64px)}h2{font-size:clamp(30px,3.62vw,52px)}
+@media(max-width:1000px){main>.hero,main>.split{padding:40px}.hero-grid>div{padding:32px}.hero-grid{grid-template-columns:1fr 1fr}.hero figure img{min-height:650px}}
+@media(max-width:768px){main>.hero,main>.split{padding:32px 24px}.hero-grid,main>.split,.values{grid-template-columns:1fr}.hero figure img{min-height:0;height:360px}.hero-grid{min-height:0}.hero h1{font-size:clamp(32px,6vw,46px)}.crew blockquote{padding:24px;font-size:24px}}
+@media(max-width:700px){.hero-grid>div{padding:24px}}
+@media(max-width:480px){.hero figure img{height:280px}.hero h1{font-size:32px}}
