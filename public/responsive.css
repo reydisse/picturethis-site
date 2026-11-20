@@ -30,3 +30,10 @@
  .site-header .ngo-button { padding:12px; }
  .ngo-navlink { min-height:44px; }
 }
+/* Keep touch controls independent of the compact phone spacing scale. */
+@media (max-width:900px) {
+ .story-control, .testimonial-dot {min-width:44px;min-height:44px;width:44px;height:44px}
+ .site-nav .ngo-navlink {display:inline-flex;align-items:center;min-height:44px}
+ button {min-width:44px}
+ input,select,textarea {max-width:100%}
+}
