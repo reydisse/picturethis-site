@@ -1,0 +1,32 @@
+/* Responsive overrides are deliberately isolated from the approved desktop. */
+@media (max-width: 900px) {
+ :root { --spacing-page:24px!important; --spacing-section:56px!important; --spacing-large:32px!important; --spacing-gutter:28px!important; --spacing-wide:28px!important; --text-poster:clamp(40px,8vw,64px)!important; --text-editorial:clamp(38px,7vw,56px)!important; --text-h1:36px!important; --text-h2:28px!important; }
+ body * { min-width:0; }
+ main *, footer * { max-width:100%; overflow-wrap:break-word; }
+ main [style*="grid-template-columns"], footer [style*="grid-template-columns"], .cpi, .ev { grid-template-columns:minmax(0,1fr)!important; }
+ main [style*="display:flex"], footer [style*="display:flex"] { flex-wrap:wrap; }
+ .site-header { position:relative; flex-wrap:wrap; gap:16px!important; }
+ .site-nav { order:3; width:100%; flex-wrap:wrap; gap:4px 20px!important; font-size:16px; }
+ body > div:first-of-type { flex-wrap:wrap; gap:8px; }
+ .approved-copy { columns:1; }
+ main > article { padding:40px 24px; }
+ main > article h1 { font-size:clamp(36px,7vw,52px); line-height:1.08; }
+ main img { max-width:100%; }
+ button, input:not([type=checkbox]):not([type=radio]), select, textarea { min-height:44px; font-size:16px; }
+ .ngo-button { white-space:normal; text-align:center; }
+ .testimonial-dot { min-width:44px; min-height:44px; background-clip:content-box; padding:16px; }
+ .testimonial-controls { flex-wrap:wrap; gap:4px!important; }
+ .cpi { gap:24px; }
+}
+@media (max-width:600px) {
+ :root { --spacing-page:20px!important; --spacing-section:44px!important; --spacing-block:24px!important; --spacing-large:24px!important; --spacing-wide:24px!important; }
+ main [style*="width:"] { max-width:100%; }
+ main [style*="padding:48px 72px"] { padding:32px 20px!important; }
+ main [style*="min-height:640px"] { min-height:340px!important; }
+ main img[style*="height:520px"], main img[style*="height:480px"], main img[style*="height:440px"] { height:300px!important; }
+ .cpi { padding-top:44px!important; }
+ .ev-date { width:112px; }
+ .site-header > div { gap:8px!important; }
+ .site-header .ngo-button { padding:12px; }
+ .ngo-navlink { min-height:44px; }
+}
