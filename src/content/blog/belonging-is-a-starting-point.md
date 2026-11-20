@@ -4,7 +4,7 @@ date: 2026-11-18
 author: "PictureThis Production"
 summary: "Why skills and trusted relationships belong in the conversation about youth violence prevention."
 photo: "/images/backstage-sound-crew.jpg"
-photo_caption: "Illustrative photography"
+photo_caption: ""
 pull_quote: "A young person deserves more than a warning about what not to do. They deserve meaningful opportunities, people who show up and somewhere to contribute."
 draft: false
 status_note: "Research-informed editorial draft. For review before publication."
@@ -17,8 +17,8 @@ status_note: "Research-informed editorial draft. For review before publication."
 
 Public Safety Canada identifies limited community attachment, poor educational or employment prospects, and a need for recognition and belonging among factors associated with youth gang involvement. It also makes an essential point: the vast majority of young people never join gangs or become involved in crime. Risk factors are not a verdict on an individual. [1]
 
-<img src="/images/concert-sound-setup.jpg" alt="A crew setting up together backstage" loading="lazy" decoding="async" />
-*Illustrative photography*
+<img src="/images/concert-sound-setup.jpg" alt="Live concert with the sound setup in the foreground" loading="lazy" decoding="async" />
+
 
 ## What a crew can offer
 
