@@ -1,0 +1,36 @@
+/* Phone/tablet adaptation only; the approved desktop composition is untouched. */
+@media (max-width: 900px) {
+ :root { --spacing-page:24px; --spacing-section:48px; --text-h1:38px; --text-h2:28px; --text-poster:44px; --text-editorial:42px; --text-lead:20px; }
+ body {overflow-wrap:anywhere}
+ main *,header *,footer * {min-width:0;max-width:100%}
+ [style*="width:"] {max-width:100%!important}
+ main [style*="grid-template-columns"],footer [style*="grid-template-columns"] {grid-template-columns:1fr!important}
+ main [style*="display:grid"],main [style*="display: grid"] {grid-template-columns:1fr!important}
+ main [style*="display:flex"],main [style*="display: flex"] {flex-wrap:wrap}
+ main img {width:100%;height:auto!important;max-height:480px;object-fit:cover}
+ .site-header {position:relative!important;flex-wrap:wrap!important;gap:16px!important}
+ .site-nav {order:3;width:100%;flex-wrap:wrap!important;gap:0 20px!important}
+ .site-nav a {display:inline-flex;align-items:center;min-height:44px}
+ body>div:first-child {gap:12px;flex-wrap:wrap}
+ a.ngo-button,button,input,select,textarea {min-height:44px;max-width:100%}
+ input,select,textarea {font-size:16px!important}
+ .ngo-button {white-space:normal;text-align:center}
+ .approved-copy {columns:1}
+ main>article h1 {font-size:38px}
+ .ev {grid-template-columns:80px 1fr;gap:16px}.ev-link{grid-column:1/-1}.ev-date{height:80px}
+ .testimonial-controls {display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+ .testimonial-dot {min-width:44px;min-height:44px}
+}
+@media (max-width:600px) {
+ :root {--spacing-page:20px;--spacing-section:40px;--spacing-wide:28px;--spacing-gutter:24px;--spacing-large:32px;--text-h1:34px;--text-h2:28px;--text-poster:38px;--text-editorial:36px}
+ main h1 {font-size:36px!important;line-height:1.1!important}
+ main h2 {font-size:28px!important;line-height:1.2!important}
+ main [style*="font-size:64px"],main [style*="font-size:76px"],main [style*="font-size:88px"] {font-size:36px!important}
+ main section,main article {max-width:100%}
+ main [style*="padding:32px"], main [style*="padding:40px"],main [style*="padding:48px"] {padding:20px!important}
+ main [style*="grid-column"],main [style*="grid-row"] {grid-column:auto!important;grid-row:auto!important}
+ .site-header>a {font-size:18px!important}
+ .site-header>div {margin-left:auto}
+ footer [style*="display:flex"] {flex-wrap:wrap;gap:16px!important}
+ main>article {padding:40px 20px}
+}
