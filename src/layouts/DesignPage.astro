@@ -2,7 +2,6 @@
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import '../styles/doop.css';
-import '../styles/responsive.css';
 const {title,design}=Astro.props;
 ---
 <!doctype html><html lang="en-CA"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="icon" href="/favicon.ico" sizes="any"/><link rel="icon" type="image/png" href="/favicon.png" sizes="32x32"/><link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180"/><title>{title} | PictureThis Production</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"/><style set:html={design.css}/><link rel="stylesheet" href="/responsive.css"/></head><body id="top"><a class="skip" href="#main">Skip to content</a><SiteHeader/><main id="main" set:html={design.html}/><SiteFooter/><script is:inline>document.querySelectorAll('.faq-q').forEach(b=>b.addEventListener('click',()=>{const p=b.closest('.faq');const open=p.dataset.state!=='open';p.dataset.state=open?'open':'closed';b.setAttribute('aria-expanded',String(open))}));document.querySelectorAll('form').forEach(f=>f.addEventListener('submit',e=>e.preventDefault()));</script></body></html>
