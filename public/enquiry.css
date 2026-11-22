@@ -1,0 +1,13 @@
+/* Form states shared by the home sheet and Get Involved. */
+.fld{display:flex;flex-direction:column;gap:8px}
+.lab{font-size:14px;font-weight:600;color:var(--color-civic-ink)}
+.inp{min-height:48px;padding:12px 14px;border:1px solid var(--color-civic-muted);background:var(--color-surface);font-size:16px;line-height:1.5;color:var(--color-civic-ink);display:flex;align-items:center;justify-content:space-between}
+.errt{display:flex;gap:8px;align-items:flex-start;font-size:14px;line-height:1.45;color:#B42318;font-weight:500}
+.alert{display:flex;gap:12px;align-items:flex-start;border-left:4px solid #B42318;background:#FDF2F1;padding:12px 16px;font-size:15px;line-height:1.5;color:#7A1A12}
+.okp{display:flex;flex-direction:column;gap:12px;border-left:4px solid var(--color-civic);background:var(--color-civic-soft);padding:24px;color:var(--color-civic-ink)}
+.redesign-enquiry { display: grid; gap: 16px; }
+.redesign-enquiry .inp { width: 100%; font-family: inherit; }
+.redesign-enquiry [aria-invalid="true"] { border: 2px solid #b42318; padding: 11px 13px; }
+.redesign-enquiry .btn { width: 100%; min-height: 48px; border: 1px solid var(--color-civic); background: var(--color-civic); color: white; font: inherit; font-weight: 700; cursor: pointer; }
+.redesign-enquiry .btn:disabled { opacity: .65; cursor: wait; }
+.redesign-enquiry [hidden], [data-enquiry-success][hidden] { display: none; }

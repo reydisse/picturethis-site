@@ -2,9 +2,10 @@
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import '../styles/doop.css';
+import enquiryForm from '../design/enquiry-form.html?raw';
 const {title,design}=Astro.props;
 ---
-<!doctype html><html lang="en-CA"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="icon" href="/favicon.ico" sizes="any"/><link rel="icon" type="image/png" href="/favicon.png" sizes="32x32"/><link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180"/><title>{title} | PictureThis Production</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"/><style set:html={design.css}/><link rel="stylesheet" href="/responsive.css"/></head><body id="top"><a class="skip" href="#main">Skip to content</a><SiteHeader/><main id="main" set:html={design.html}/><SiteFooter/><script is:inline>document.querySelectorAll('.faq-q').forEach(b=>b.addEventListener('click',()=>{const p=b.closest('.faq');const open=p.dataset.state!=='open';p.dataset.state=open?'open':'closed';b.setAttribute('aria-expanded',String(open))}));</script><script src="/enquiry.js" defer></script></body></html>
+<!doctype html><html lang="en-CA"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="icon" href="/favicon.ico" sizes="any"/><link rel="icon" type="image/png" href="/favicon.png" sizes="32x32"/><link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180"/><title>{title} | PictureThis Production</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"/><style set:html={design.css}/><link rel="stylesheet" href="/responsive.css"/><link rel="stylesheet" href="/enquiry.css"/></head><body id="top"><a class="skip" href="#main">Skip to content</a><SiteHeader/><main id="main" set:html={design.html.replace('<!-- enquiry-form -->', () => enquiryForm)}/><SiteFooter/><script is:inline>document.querySelectorAll('.faq-q').forEach(b=>b.addEventListener('click',()=>{const p=b.closest('.faq');const open=p.dataset.state!=='open';p.dataset.state=open?'open':'closed';b.setAttribute('aria-expanded',String(open))}));</script><script src="/enquiry.js" defer></script></body></html>
 <script is:inline>
 document.querySelectorAll('section:has(.amt)').forEach(section => {
  const buttons = [...section.querySelectorAll('.amt')];
@@ -29,54 +30,5 @@ document.querySelectorAll('section:has(.amt)').forEach(section => {
  });
  const selected = buttons.find(b => b.dataset.state === 'selected');
  if (selected) selected.click();
-});
-</script>
-
-<script is:inline>
-document.querySelectorAll('[data-testimonial-track]').forEach(track => {
- const slides = [...track.children].filter(el => el.tagName === 'FIGURE');
- const motion = matchMedia('(prefers-reduced-motion: reduce)');
- let index = 0, timer;
- const band = track.closest('#stories');
- const controls = document.createElement('div');
- controls.className = 'testimonial-controls';
- const button = (label, text, action, className = 'story-control') => {
-  const b = document.createElement('button');
-  b.type = 'button'; b.className = className; b.setAttribute('aria-label', label);
-  b.textContent = text; b.addEventListener('click', action); controls.append(b); return b;
- };
- const choose = i => { index = (i + slides.length) % slides.length; show(); start(); };
- button('Previous testimonial', '←', () => choose(index - 1));
- const dots = slides.map((slide, i) => button(`Show testimonial ${i + 1}`, '', () => choose(i), 'testimonial-dot'));
- button('Next testimonial', '→', () => choose(index + 1));
- track.after(controls);
- controls.style.gridColumn = '2';
- // Keep controls with the quote in both desktop and single-column layouts.
- const wrapper = document.createElement('div'); wrapper.style.minWidth = '0';
- track.before(wrapper); wrapper.append(track, controls); controls.style.gridColumn = '';
- const measure = () => { track.style.height = `${slides[index].getBoundingClientRect().height}px`; };
- const show = () => {
-  slides.forEach((slide, i) => {
-   slide.dataset.active = String(i === index);
-   slide.setAttribute('aria-hidden', String(i !== index)); slide.inert = i !== index;
-   dots[i].setAttribute('aria-pressed', String(i === index));
-  });
-  measure();
- };
- new ResizeObserver(measure).observe(wrapper);
- document.fonts.ready.then(measure);
- const stop = () => clearInterval(timer);
- const start = () => {
-  stop();
-  if (motion.matches) return;
-  if (slides.length < 2 || track.closest('#stories').matches(':hover, :focus-within')) return;
-  timer = setInterval(() => { index = (index + 1) % slides.length; show(); }, 12000);
- };
- band.addEventListener('mouseenter', stop);
- band.addEventListener('mouseleave', start);
- band.addEventListener('focusin', stop);
- band.addEventListener('focusout', () => setTimeout(start, 0));
- motion.addEventListener('change', start);
- show(); start();
 });
 </script>

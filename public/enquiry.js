@@ -3,12 +3,26 @@ document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
   status.tabIndex = -1;
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
-  form.append(status);
+  const designed = form.hasAttribute('data-designed-status');
+  const success = form.parentElement.querySelector('[data-enquiry-success]');
+  const done = form.parentElement.querySelector('[data-enquiry-done]');
+  if (designed) {
+    status.hidden = true;
+    form.prepend(status);
+  } else {
+    form.append(status);
+  }
+  const announce = (message, tone = '') => {
+    status.textContent = message;
+    status.className = designed ? tone : '';
+    status.hidden = false;
+  };
   const fields = [...form.querySelectorAll('input, select')];
   const errors = fields.map((field, index) => {
     const error = document.createElement('span');
     error.id = `enquiry-error-${index}`;
-    error.style.display = 'block';
+    if (designed) error.className = 'errt';
+    error.hidden = true;
     field.setAttribute('aria-describedby', error.id);
     field.after(error);
     return error;
@@ -21,18 +35,20 @@ document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
     fields.forEach((field, index) => {
       const valid = field.checkValidity() && field.value.trim() !== '';
       errors[index].textContent = valid ? '' : field.type === 'email' ? 'Enter a valid email address.' : 'Please complete this field.';
+      errors[index].hidden = valid;
       field.setAttribute('aria-invalid', String(!valid));
       invalid ||= !valid;
     });
     if (invalid) {
-      status.textContent = 'Please correct the highlighted fields.';
+      announce('Please correct the highlighted fields.', 'alert');
       status.focus();
       return;
     }
     button.disabled = true;
     const original = button.innerHTML;
     button.textContent = 'Sending…';
-    status.textContent = 'Sending your enquiry…';
+    button.setAttribute('aria-busy', 'true');
+    announce('Sending your enquiry…');
     const payload = Object.fromEntries(new FormData(form));
     payload._subject = `Website enquiry: ${location.pathname === '/' ? 'Home' : 'Get Involved'} form — ${payload.interest}`;
     payload._template = 'table';
@@ -42,11 +58,24 @@ document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
       });
       const result = await response.json();
       if (!response.ok || (result.success !== true && result.success !== 'true')) throw new Error('Submission failed');
-      status.textContent = 'Thank you! Your enquiry has been sent. We look forward to being in touch.';
-      form.replaceWith(status);
-      status.focus();
+      const message = 'Thank you! Your enquiry has been sent. We look forward to being in touch.';
+      if (success) {
+        const confirmation = success.querySelector('[data-status-message]');
+        confirmation.textContent = message;
+        success.hidden = false;
+        done.hidden = false;
+        form.remove();
+        success.tabIndex = -1;
+        success.setAttribute('role', 'status');
+        success.focus();
+      } else {
+        announce(message, designed ? 'okp' : '');
+        form.replaceWith(status);
+        status.focus();
+      }
     } catch {
-      status.textContent = 'Your enquiry could not be sent. Please try again or contact hello@picturethis-production.com directly.';
+      announce('Your enquiry could not be sent. Please try again or contact hello@picturethis-production.com directly.', 'alert');
+      button.removeAttribute('aria-busy');
       button.disabled = false;
       button.innerHTML = original;
       status.focus();

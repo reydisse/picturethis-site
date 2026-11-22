@@ -1,5 +1,72 @@
 ---
-import DesignPage from "../layouts/DesignPage.astro";
-import design from "../design/index.json";
+import desktop from '../design/home-desktop.html?raw';
+import mobile from '../design/home-mobile.html?raw';
+import menu from '../design/home-menu.html?raw';
+import givingDesktop from '../design/home-giving-desktop.html?raw';
+import givingMobile from '../design/home-giving-mobile.html?raw';
+import enquiry from '../design/home-enquiry.html?raw';
+import enquiryForm from '../design/enquiry-form.html?raw';
+import '../styles/home.css';
 ---
-<DesignPage title="Home" design={design} />
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Home | PictureThis Production</title>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400..700&family=Space+Grotesk:wght@300..700&display=swap" />
+    <link rel="stylesheet" href="/enquiry.css" />
+  </head>
+  <body class="home">
+    <a class="skip-link skip-desktop" href="#main-desktop">Skip to content</a>
+    <a class="skip-link skip-mobile" href="#main-mobile">Skip to content</a>
+    <div class="home-desktop" set:html={desktop} />
+    <div class="home-mobile" set:html={mobile} />
+    <Fragment set:html={menu} />
+    <Fragment set:html={givingDesktop} />
+    <Fragment set:html={givingMobile} />
+    <Fragment set:html={enquiry.replace('<!-- enquiry-form -->', () => enquiryForm)} />
+    <script src="/enquiry.js" defer></script>
+    <script>
+      import { initializeTestimonials } from '../scripts/testimonials';
+      document.querySelectorAll<HTMLElement>('[data-testimonial-track]').forEach(initializeTestimonials);
+
+      const mobile = matchMedia('(max-width: 999px)');
+      for (const trigger of document.querySelectorAll<HTMLElement>('[data-open-dialog], [data-enquiry-interest]')) {
+        trigger.addEventListener('click', (event) => {
+          if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          const target = trigger.dataset.openDialog ?? 'enquiry';
+          const id = target === 'giving' ? `giving-${mobile.matches ? 'mobile' : 'desktop'}` : target;
+          const dialog = document.getElementById(id);
+          if (!(dialog instanceof HTMLDialogElement) || typeof dialog.showModal !== 'function') return;
+          event.preventDefault();
+          trigger.closest('dialog')?.close();
+          const interest = dialog.querySelector<HTMLSelectElement>('select[name="interest"]');
+          if (interest && trigger.dataset.enquiryInterest) interest.value = trigger.dataset.enquiryInterest;
+          dialog.showModal();
+        });
+      }
+      for (const dialog of document.querySelectorAll('dialog')) {
+        dialog.addEventListener('click', (event) => {
+          if (!(event.target instanceof Element)) return;
+          if (event.target.closest('[data-close-dialog]')) dialog.close();
+          if (event.target !== dialog) return;
+          const box = dialog.getBoundingClientRect();
+          if (event.clientX < box.left || event.clientX > box.right ||
+              event.clientY < box.top || event.clientY > box.bottom) dialog.close();
+        });
+      }
+      for (const question of document.querySelectorAll<HTMLButtonElement>('.faq .q')) {
+        question.addEventListener('click', () => {
+          const answer = document.getElementById(question.getAttribute('aria-controls') ?? '');
+          if (!answer) return;
+          answer.hidden = !answer.hidden;
+          question.setAttribute('aria-expanded', String(!answer.hidden));
+        });
+      }
+    </script>
+  </body>
+</html>
