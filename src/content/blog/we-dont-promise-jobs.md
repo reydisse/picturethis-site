@@ -22,7 +22,7 @@ Every participant is matched with a mentor, and mentoring here comes with clear 
 
 And the pathway doesn't stop at operating. Participants who work well on a crew learn production management: advancing the event, building the run sheet, managing the budget, and calling the show. Those who want to go further learn technical management: planning the rig, signing off on safety, and teaching the next cohort. The goal isn't just a job. It's a ladder, from your first cable to leading the room.
 
-If that sounds like the way you want to learn, the next cohort starts in January. Twenty places, free, gear provided, ages 16 to 29.
+If that sounds like the way you want to learn, the next cohort starts in January.
 
 ## Questions first?
 

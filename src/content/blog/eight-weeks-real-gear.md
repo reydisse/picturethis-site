@@ -22,7 +22,7 @@ Week 5 covers lighting: hang, focus, and cable a rig safely, then program cues a
 
 Week 8 is the big finale. A full event, run entirely by the cohort, with mentors on comms only if needed. That's the show you'll graduate with as your reference.
 
-Everyone starts together in week 1, and nobody falls behind. The course is free, all the gear is provided, and it takes place at Faithfire Production, 139 Millwick Dr, and partner venues across the GTA. The next cohort starts in January, with twenty places for young people ages 16 to 29. No experience needed. Just bring yourself.
+Everyone starts together in week 1, and nobody falls behind. The course is free, all the gear is provided, and it takes place at Faithfire Production, 139 Millwick Dr, and partner venues across the GTA. Applications are open for January. No experience needed. Just bring yourself.
 
 ## Sound like your kind of Saturday?
 

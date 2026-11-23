@@ -32,7 +32,7 @@ Canada's Youth Gang Prevention Fund emphasises targeted, evidence-based interven
 
 ## Come and be part of it
 
-Belonging is not a slogan here. It is a Saturday morning, a crew that knows your name, and work that matters. If you are 16 to 29 and want in, or you work with young people and want to talk, we would like to meet you. The next cohort starts in January, and the Get Involved page is where it begins.
+Belonging is not a slogan here. It is a Saturday morning, a crew that knows your name, and work that matters. The next cohort starts in January, and the Get Involved page is where it begins.
 
 ## Research & further reading
 
