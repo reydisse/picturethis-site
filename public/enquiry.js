@@ -53,7 +53,7 @@ document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
     payload._subject = `Website enquiry: ${location.pathname === '/' ? 'Home' : 'Get Involved'} form — ${payload.interest}`;
     payload._template = 'table';
     try {
-      const response = await fetch('https://formsubmit.co/ajax/hello@picturethis-production.com', {
+      const response = await fetch('/api/enquiry', {
         method: 'POST', headers: {'Content-Type': 'application/json', Accept: 'application/json'}, body: JSON.stringify(payload)
       });
       const result = await response.json();
