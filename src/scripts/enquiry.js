@@ -1,4 +1,4 @@
-document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
+document.querySelectorAll('[data-enquiry-form]').forEach((form, formIndex) => {
   const status = document.createElement('p');
   status.tabIndex = -1;
   status.setAttribute('role', 'status');
@@ -17,10 +17,10 @@ document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
     status.className = designed ? tone : '';
     status.hidden = false;
   };
-  const fields = [...form.querySelectorAll('input, select')];
+  const fields = [...form.querySelectorAll('input:not([type=hidden]), select')];
   const errors = fields.map((field, index) => {
     const error = document.createElement('span');
-    error.id = `enquiry-error-${index}`;
+    error.id = `enquiry-error-${formIndex}-${index}`;
     if (designed) error.className = 'errt';
     error.hidden = true;
     field.setAttribute('aria-describedby', error.id);
@@ -50,7 +50,8 @@ document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
     button.setAttribute('aria-busy', 'true');
     announce('Sending your enquiry…');
     const payload = Object.fromEntries(new FormData(form));
-    payload._subject = `Website enquiry: ${location.pathname === '/' ? 'Home' : 'Get Involved'} form — ${payload.interest}`;
+    const equipmentDonation = payload.interest === 'Donate equipment';
+    payload._subject = equipmentDonation ? 'Website enquiry: Donate equipment' : `Website enquiry: ${location.pathname === '/' ? 'Home' : 'Get Involved'} form — ${payload.interest}`;
     payload._template = 'table';
     try {
       const response = await fetch('/api/enquiry', {
@@ -58,7 +59,9 @@ document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
       });
       const result = await response.json();
       if (!response.ok || (result.success !== true && result.success !== 'true')) throw new Error('Submission failed');
-      const message = 'Thank you! Your enquiry has been sent. We look forward to being in touch.';
+      const message = equipmentDonation
+        ? 'Thanks for offering equipment! We’ll be in touch to confirm whether we can use it and arrange drop-off or pickup.'
+        : 'Thank you! Your enquiry has been sent. We look forward to being in touch.';
       if (success) {
         const confirmation = success.querySelector('[data-status-message]');
         confirmation.textContent = message;

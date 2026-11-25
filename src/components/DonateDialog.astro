@@ -1,0 +1,116 @@
+---
+import EquipmentDonationCopy from './EquipmentDonationCopy.astro';
+---
+<dialog id="donation-dialog" aria-labelledby="donation-choice-title">
+  <button type="button" class="close" data-donation-close autofocus>Close</button>
+  <section data-donation-choice>
+    <h2 id="donation-choice-title">How would you like to give?</h2>
+    <div class="choices">
+      <a class="donation-button" href="/donate/" data-give-money>Give money</a>
+      <button class="donation-button" type="button" data-donation-equipment>Donate equipment</button>
+    </div>
+  </section>
+  <section data-donation-details hidden>
+    <h2 id="donation-equipment-title" tabindex="-1">Donate equipment</h2>
+    <EquipmentDonationCopy />
+    <form data-enquiry-form novalidate>
+      <input type="hidden" name="interest" value="Donate equipment" />
+      <label>Full name <input name="name" autocomplete="name" required /></label>
+      <label>Email <input name="email" type="email" autocomplete="email" required /></label>
+      <label>What equipment? <input name="equipment" required /></label>
+      <label>Condition
+        <select name="condition" required>
+          <option value="">Choose a condition</option>
+          <option>Working</option>
+          <option>Needs repair</option>
+          <option>Not sure</option>
+        </select>
+      </label>
+      <label>How does it get to us?
+        <select name="handover" required>
+          <option value="">Choose drop-off or pickup</option>
+          <option>I can drop it off</option>
+          <option>Please arrange pickup</option>
+        </select>
+      </label>
+      <label>Message (optional) <textarea name="message" rows="3"></textarea></label>
+      <button class="donation-button" type="submit">Offer equipment</button>
+    </form>
+  </section>
+</dialog>
+
+<script>
+  import '../scripts/enquiry';
+
+  const dialog = document.querySelector<HTMLDialogElement>('#donation-dialog')!;
+  const choice = dialog.querySelector<HTMLElement>('[data-donation-choice]')!;
+  const details = dialog.querySelector<HTMLElement>('[data-donation-details]')!;
+  const heading = dialog.querySelector<HTMLElement>('#donation-equipment-title')!;
+  const close = dialog.querySelector<HTMLButtonElement>('[data-donation-close]')!;
+  let trigger: HTMLElement | null = null;
+
+  function showEquipment() {
+    choice.hidden = true;
+    details.hidden = false;
+    dialog.setAttribute('aria-labelledby', heading.id);
+    heading.focus();
+    dialog.scrollTop = 0;
+  }
+
+  document.addEventListener('click', (event) => {
+    if (!(event.target instanceof Element) || event.defaultPrevented ||
+        event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const direct = event.target.closest<HTMLElement>('[data-open-equipment]');
+    const link = event.target.closest<HTMLAnchorElement>('a[href="/donate/"], a[href="/donate"]');
+    if (!direct && (!link || link.hasAttribute('data-give-money'))) return;
+    event.preventDefault();
+    trigger = direct ?? link;
+    choice.hidden = false;
+    details.hidden = true;
+    dialog.setAttribute('aria-labelledby', 'donation-choice-title');
+    dialog.showModal();
+    if (direct) showEquipment();
+  });
+
+  dialog.querySelector('[data-donation-equipment]')?.addEventListener('click', showEquipment);
+  close.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('close', () => trigger?.focus());
+</script>
+
+<style>
+  dialog {
+    box-sizing: border-box;
+    width: min(36rem, calc(100% - 2rem));
+    max-height: calc(100% - 2rem);
+    padding: clamp(1rem, 4vw, 2rem);
+    border: 1px solid #ccd5ed;
+    background: white;
+    color: #14265b;
+    font: 1rem/1.5 'DM Sans', sans-serif;
+    overflow: auto;
+  }
+  dialog::backdrop { background: rgb(20 38 91 / 65%); }
+  h2 { margin: 0 0 1rem; color: #203da5; font: 600 1.8rem/1.1 'Space Grotesk', sans-serif; }
+  dialog :global(p) { margin: 0 0 1rem; }
+  .choices { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .donation-button, .close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: .6rem 1rem;
+    border: 1px solid #203da5;
+    background: #203da5;
+    color: white;
+    text-decoration: none;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .close { margin: 0 0 1rem auto; display: flex; background: white; color: #203da5; }
+  form, label { display: grid; gap: .35rem; }
+  form { gap: .85rem; }
+  input, select, textarea { box-sizing: border-box; width: 100%; min-width: 0; padding: .6rem; border: 1px solid #536185; font: inherit; }
+  dialog :global(:focus-visible) { outline: 2px solid #203da5; outline-offset: 3px; }
+  dialog :global([aria-invalid="true"]) { border-color: #a41e2d; }
+</style>

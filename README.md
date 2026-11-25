@@ -4,9 +4,9 @@ Run `npm install` and `npm run build`. Static output is `dist/`. Deploy with `wr
 
 ## Editorial workflow
 
-Chief drafts from program notes and photos. Rey approves every article; merging the PR publishes through a manual build/deploy. Cadence follows cohort starts, show recaps, mentor spotlights and graduate milestones.
+Chief drafts from program notes and photos. The editorial lead approves every article; merging the PR publishes through a manual build/deploy. Cadence follows cohort starts, show recaps, mentor spotlights and graduate milestones.
 
-## Pre-launch — Rey's actions
+## Pre-launch actions
 
 - Swap the real contact email in `src/config.ts` (the single placeholder value).
 - Connect a form service using `formEndpoint` in the same config.

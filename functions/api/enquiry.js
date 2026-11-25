@@ -27,6 +27,14 @@ export async function onRequest({ request, env }) {
     return Response.json({ success: false }, { status: 400 });
   }
 
+  if (interest === 'Donate equipment' && (
+    typeof fields.equipment !== 'string' || !fields.equipment.trim() ||
+    !['Working', 'Needs repair', 'Not sure'].includes(fields.condition) ||
+    !['I can drop it off', 'Please arrange pickup'].includes(fields.handover)
+  )) {
+    return Response.json({ success: false }, { status: 400 });
+  }
+
   try {
     const subject = String(_subject ?? '').replace(/[\r\n\u2028\u2029]/g, '').trim() || 'Website enquiry';
     const text = Object.entries(fields)
@@ -62,6 +70,27 @@ export async function onRequest({ request, env }) {
     return Response.json({ success: false }, { status: 502 });
   }
 }
+
+const acknowledgementHeader = `<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@700&family=DM+Sans:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>a{color:#2438A0}@media (max-width:620px){.px{padding-left:24px!important;padding-right:24px!important}.h1{font-size:32px!important}}</style></head>
+<body style="margin:0;padding:0;background-color:#E4E7F4;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#E4E7F4;"><tr><td align="center" style="padding:24px 8px;">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color:#FFFFFF;max-width:600px;width:100%;"><tr><td class="px" style="background-color:#2438A0;padding:36px 48px;font-family:'Archivo Narrow','Arial Narrow',Arial,sans-serif;font-weight:700;text-transform:uppercase;line-height:0.95;font-size:34px;color:#FFFFFF;">PictureThis<br>Production</td></tr><tr><td class="px" style="padding:44px 48px 0;font-family:'DM Sans',Arial,sans-serif;">
+`;
+
+const acknowledgementFooter = `</td></tr><tr><td class="px" style="padding:30px 48px 42px;font-family:'DM Sans',Arial,sans-serif;font-size:17px;line-height:1.55;color:#1B2455;">
+<div>Talk soon,</div>
+<div style="font-weight:700;">The PictureThis Production team</div>
+<div><a href="mailto:hello@picturethis-production.com" style="color:#2438A0;">hello@picturethis-production.com</a></div>
+</td></tr><tr><td class="px" style="background-color:#1B2455;padding:36px 48px;font-family:'DM Sans',Arial,sans-serif;">
+<div style="font-family:'Archivo Narrow','Arial Narrow',Arial,sans-serif;font-weight:700;text-transform:uppercase;line-height:0.95;font-size:22px;color:#FFFFFF;">PictureThis<br>Production</div>
+<div style="font-size:14px;line-height:1.6;color:#C8CEEA;padding-top:14px;">139 Millwick Dr, Toronto, ON M9L 1Y7 &middot; <a href="https://picturethis-production.com" style="color:#FFFFFF;">picturethis-production.com</a></div>
+<div style="font-size:14px;font-weight:700;letter-spacing:0.06em;color:#FFFFFF;padding-top:12px;">Free training. Real shows. A real path into the industry.</div>
+</td></tr>
+</table></td></tr></table>
+</body></html>`;
 
 const acknowledgementCopy = {
   cohort: {
@@ -177,16 +206,29 @@ hello@picturethis-production.com
 PictureThis Production · 139 Millwick Dr, Toronto, ON M9L 1Y7 · picturethis-production.com
 Free training. Real shows. A real path into the industry.`,
   },
+  equipment: {
+    subject: 'Thanks for offering equipment',
+    html: `${acknowledgementHeader}<div style="font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#2438A0;">Equipment offer received</div>
+<div class="h1" style="font-family:'Space Grotesk',Arial,sans-serif;font-weight:500;font-size:42px;line-height:1.08;color:#2438A0;padding-top:14px;">Thanks for offering equipment, {{FIRST_NAME}}.</div>
+</td></tr><tr><td class="px" style="padding:18px 48px 0;font-family:'DM Sans',Arial,sans-serif;font-size:17px;line-height:1.65;color:#2B3263;">
+<p>We’ll check whether we can use your gear. If we can, we’ll arrange a drop-off at 139 Millwick Dr or a pickup. When we receive it, we’ll log the donation and send you a written acknowledgement.</p>
+<p>PictureThis is a nonprofit. We aren’t a registered charity, so we can’t issue a tax receipt for donated equipment.</p>
+${acknowledgementFooter}`,
+    text: `Thanks for offering equipment, {{FIRST_NAME}}.
+
+We’ll check whether we can use your gear. If we can, we’ll arrange a drop-off at 139 Millwick Dr or a pickup. When we receive it, we’ll log the donation and send you a written acknowledgement.
+
+PictureThis is a nonprofit. We aren’t a registered charity, so we can’t issue a tax receipt for donated equipment.
+
+Talk soon,
+The PictureThis Production team
+hello@picturethis-production.com
+
+PictureThis Production · 139 Millwick Dr, Toronto, ON M9L 1Y7 · picturethis-production.com`,
+  },
   other: {
     subject: 'Thanks for reaching out',
-    html: `<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@700&family=DM+Sans:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-<style>a{color:#2438A0}@media (max-width:620px){.px{padding-left:24px!important;padding-right:24px!important}.h1{font-size:32px!important}}</style></head>
-<body style="margin:0;padding:0;background-color:#E4E7F4;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#E4E7F4;"><tr><td align="center" style="padding:24px 8px;">
-<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color:#FFFFFF;max-width:600px;width:100%;"><tr><td class="px" style="background-color:#2438A0;padding:36px 48px;font-family:'Archivo Narrow','Arial Narrow',Arial,sans-serif;font-weight:700;text-transform:uppercase;line-height:0.95;font-size:34px;color:#FFFFFF;">PictureThis<br>Production</td></tr><tr><td class="px" style="padding:44px 48px 0;font-family:'DM Sans',Arial,sans-serif;">
-<div style="font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#2438A0;">Message received</div>
+    html: `${acknowledgementHeader}<div style="font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#2438A0;">Message received</div>
 <div class="h1" style="font-family:'Space Grotesk',Arial,sans-serif;font-weight:500;font-size:42px;line-height:1.08;letter-spacing:-0.01em;color:#2438A0;padding-top:14px;">Thanks for reaching out, {{FIRST_NAME}}.</div>
 </td></tr><tr><td class="px" style="padding:18px 48px 0;font-family:'DM Sans',Arial,sans-serif;"><p style="margin:0 0 14px 0;font-size:17px;line-height:1.65;color:#2B3263;">Thanks for reaching out to PictureThis Production. Your message is in, and we read every one.</p><p style="margin:0 0 14px 0;font-size:17px;line-height:1.65;color:#2B3263;">Partnerships are what keep the program free for participants. However you want to help, we would like to hear it.</p></td></tr><tr><td class="px" style="padding:30px 48px 0;font-family:'DM Sans',Arial,sans-serif;">
 <div style="font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#2438A0;padding-bottom:20px;">What happens next</div>
@@ -200,17 +242,7 @@ Free training. Real shows. A real path into the industry.`,
 </td></tr><tr><td class="px" style="padding:34px 48px 0;font-family:'DM Sans',Arial,sans-serif;">
 <div style="font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#2438A0;padding-bottom:16px;">Ways to partner</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td width="50%" valign="top" style="background-color:#EEF0F8;border-top:4px solid #2438A0;padding:20px 22px;font-family:'DM Sans',Arial,sans-serif;font-weight:700;font-size:17px;color:#1B2455;line-height:1.3;">Host a training day</td><td width="12"></td><td width="50%" valign="top" style="background-color:#EEF0F8;border-top:4px solid #2438A0;padding:20px 22px;font-family:'DM Sans',Arial,sans-serif;font-weight:700;font-size:17px;color:#1B2455;line-height:1.3;">Lend gear</td></tr><tr><td height="12" colspan="3"></td></tr><tr><td width="50%" valign="top" style="background-color:#EEF0F8;border-top:4px solid #2438A0;padding:20px 22px;font-family:'DM Sans',Arial,sans-serif;font-weight:700;font-size:17px;color:#1B2455;line-height:1.3;">Fund a cohort</td><td width="12"></td><td width="50%" valign="top" style="background-color:#EEF0F8;border-top:4px solid #2438A0;padding:20px 22px;font-family:'DM Sans',Arial,sans-serif;font-weight:700;font-size:17px;color:#1B2455;line-height:1.3;">Hire our graduates</td></tr></table>
-</td></tr><tr><td class="px" style="padding:30px 48px 42px;font-family:'DM Sans',Arial,sans-serif;font-size:17px;line-height:1.55;color:#1B2455;">
-<div>Talk soon,</div>
-<div style="font-weight:700;">The PictureThis Production team</div>
-<div><a href="mailto:hello@picturethis-production.com" style="color:#2438A0;">hello@picturethis-production.com</a></div>
-</td></tr><tr><td class="px" style="background-color:#1B2455;padding:36px 48px;font-family:'DM Sans',Arial,sans-serif;">
-<div style="font-family:'Archivo Narrow','Arial Narrow',Arial,sans-serif;font-weight:700;text-transform:uppercase;line-height:0.95;font-size:22px;color:#FFFFFF;">PictureThis<br>Production</div>
-<div style="font-size:14px;line-height:1.6;color:#C8CEEA;padding-top:14px;">139 Millwick Dr, Toronto, ON M9L 1Y7 &middot; <a href="https://picturethis-production.com" style="color:#FFFFFF;">picturethis-production.com</a></div>
-<div style="font-size:14px;font-weight:700;letter-spacing:0.06em;color:#FFFFFF;padding-top:12px;">Free training. Real shows. A real path into the industry.</div>
-</td></tr>
-</table></td></tr></table>
-</body></html>`,
+${acknowledgementFooter}`,
     text: `Thanks for reaching out, {{FIRST_NAME}}.
 
 Thanks for reaching out to PictureThis Production. Your message is in, and we read every one.
@@ -236,6 +268,7 @@ async function sendAcknowledgement(env, email, firstName, interest) {
   let copy = acknowledgementCopy.other;
   if (interest === 'Join the next cohort') copy = acknowledgementCopy.cohort;
   if (interest === 'Become a mentor') copy = acknowledgementCopy.mentor;
+  if (interest === 'Donate equipment') copy = acknowledgementCopy.equipment;
 
   const htmlName = firstName.replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;').replaceAll('>', '&gt;')
