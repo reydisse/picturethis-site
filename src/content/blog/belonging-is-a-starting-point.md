@@ -10,7 +10,6 @@ draft: false
 ---
 
 
-*Why skills and trusted relationships belong in the conversation about youth violence prevention.*
 
 **A young person deserves more than a warning about what not to do. They deserve meaningful opportunities, people who show up and somewhere to contribute.**
 

@@ -8,6 +8,7 @@ import enquiry from '../design/home-enquiry.html?raw';
 import enquiryForm from '../design/enquiry-form.html?raw';
 import { withEnquiryConfig } from '../lib/enquiry';
 import '../styles/home.css';
+import SiteFooter from '../components/SiteFooter.astro';
 ---
 <!doctype html>
 <html lang="en-CA">
@@ -27,6 +28,7 @@ import '../styles/home.css';
     <a class="skip-link skip-mobile" href="#main-mobile">Skip to content</a>
     <div class="home-desktop" set:html={desktop} />
     <div class="home-mobile" set:html={mobile} />
+    <SiteFooter />
     <Fragment set:html={menu} />
     <Fragment set:html={givingDesktop} />
     <Fragment set:html={givingMobile} />

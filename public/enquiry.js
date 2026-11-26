@@ -60,8 +60,10 @@ document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
       const response = await fetch(endpoint, {
         method: 'POST', headers: {'Content-Type': 'application/json', Accept: 'application/json'}, body: JSON.stringify(payload)
       });
-      const result = await response.json();
-      if (!response.ok || (result.success !== true && result.success !== 'true')) throw new Error('Submission failed');
+      const result = await response.json().catch(() => ({}));
+      // The endpoint can refuse a submission (validation, or the mail service failing).
+      // Keep its reason for the site owner in the console.
+      if (!response.ok || (result.success !== true && result.success !== 'true')) throw new Error(result.message || `HTTP ${response.status}`);
       const message = form.dataset.success ?? 'Thank you! Your enquiry has been sent. We look forward to being in touch.';
       if (success) {
         const confirmation = success.querySelector('[data-status-message]');
@@ -77,8 +79,20 @@ document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
         form.replaceWith(status);
         status.focus();
       }
-    } catch {
-      announce(`Your enquiry could not be sent. Please try again or contact ${contact} directly.`, 'alert');
+    } catch (error) {
+      console.error('Enquiry not sent:', error);
+      // Never lose what the visitor typed: offer the same enquiry as a ready-made email.
+      const body = Object.entries(payload)
+        .filter(([key]) => !key.startsWith('_'))
+        .map(([key, value]) => `${key}: ${value}`)
+        .join('\n');
+      const email = document.createElement('a');
+      email.href = `mailto:${contact}?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(body)}`;
+      email.textContent = `email it to ${contact}`;
+      announce('', 'alert');
+      const sentence = document.createElement('span');
+      sentence.append('Your enquiry could not be sent from this page. Please try again, or ', email, ' instead (your details are filled in for you).');
+      status.append(sentence);
       button.removeAttribute('aria-busy');
       button.disabled = false;
       button.innerHTML = original;

@@ -1,5 +1,16 @@
 ---
-import DesignPage from "../layouts/DesignPage.astro";
-import design from "../design/blog.json";
+import PageHero from "../components/PageHero.astro";
+import PostCard from "../components/PostCard.astro";
+import Site from "../layouts/Site.astro";
+import { publishedPosts } from "../lib/blog";
+const posts = await publishedPosts();
 ---
-<DesignPage title="Blog" design={design} description="Stories from the PictureThis crew room: what training looks like, what we promise, and why belonging matters." />
+<Site title="Blog" description="Stories from the PictureThis crew room: what training looks like, what we promise, and why belonging matters.">
+  <PageHero eyebrow="Blog" title="From the crew room."/>
+  <section class="blog-index" aria-label="Articles">
+    <p class="blog-intro">What training looks like on a Saturday, what we promise and what we don't, and why belonging matters. Written by the crew.</p>
+    <div class="post-grid">
+      {posts.map((post) => <PostCard post={post}/>)}
+    </div>
+  </section>
+</Site>
