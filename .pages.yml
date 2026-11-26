@@ -1,0 +1,263 @@
+# Pages CMS (https://app.pagescms.org): forms for the site's everyday content.
+# Saving commits to the repository; the "Publish site" GitHub workflow then rebuilds and deploys it.
+
+media:
+  input: public/images
+  output: /images
+  rename: safe
+  categories: [image]
+
+content:
+  - name: events
+    label: Events
+    type: collection
+    path: src/content/events
+    filename: "{primary}.md"
+    format: yaml-frontmatter
+    view:
+      fields: [title, host, dateLabel, draft]
+      primary: title
+      sort: [title, start]
+      default:
+        sort: start
+        order: asc
+    fields:
+      - name: title
+        label: Event name
+        type: string
+        required: true
+      - name: draft
+        label: Hidden (draft)
+        description: Leave on until the event is ready to appear on the site.
+        type: boolean
+        default: true
+      - name: host
+        label: Whose event is it?
+        type: select
+        required: true
+        options:
+          values:
+            - name: picturethis
+              label: PictureThis event
+            - name: partner
+              label: Partner event (an organisation we work with)
+            - name: community
+              label: Community event (run independently; we're sharing it)
+      - name: hostName
+        label: Host name
+        description: For partner and community events, who runs it, for example "Faithfire Production". Leave empty for PictureThis events.
+        type: string
+      - name: format
+        label: Format
+        description: Shown as a badge and used for the format filter, for example Training cohort, Workshop, Showcase, Training day.
+        type: string
+        required: true
+      - name: summary
+        label: Short summary
+        description: One or two sentences for the event card.
+        type: text
+        required: true
+        options:
+          maxlength: 280
+      - name: dateLabel
+        label: Date as people should read it
+        description: For example "Saturday, August 14, 2027", "Starts January 2027" or "Dates to be confirmed".
+        type: string
+        required: true
+      - name: start
+        label: Start date
+        description: Leave empty until the date is fixed. Sets the date tile, ordering, Past/Upcoming and Add to calendar.
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: end
+        label: End date (multi-day events)
+        type: date
+        default: ""
+        options:
+          format: yyyy-MM-dd
+      - name: month
+        label: Month, if there's no exact date yet
+        description: Format YYYY-MM, for example 2027-01. Ignored once a start date is set.
+        type: string
+        pattern:
+          regex: "^(\\d{4}-\\d{2})?$"
+          message: Use YYYY-MM, for example 2027-01
+      - name: time
+        label: Time
+        description: For example "Saturdays, 10:00 AM–2:00 PM".
+        type: string
+      - name: location
+        label: Location
+        type: string
+        required: true
+      - name: cost
+        label: Cost
+        description: For example "Free".
+        type: string
+      - name: places
+        label: Places
+        description: A number, or text such as "20, with a waitlist once full".
+        type: string
+      - name: audience
+        label: Who it's for
+        type: string
+      - name: cta
+        label: Main button
+        description: Fill in both or leave both empty. Leave empty until a real registration link exists.
+        type: object
+        fields:
+          - name: label
+            label: Button text
+            type: string
+          - name: href
+            label: Button link
+            description: A page on this site (/get-involved/#join) or a full https:// link.
+            type: string
+      - name: photo
+        label: Photo
+        type: image
+      - name: body
+        label: Full description
+        type: rich-text
+        options:
+          format: markdown
+
+  - name: blog
+    label: Blog
+    type: collection
+    path: src/content/blog
+    filename: "{primary}.md"
+    format: yaml-frontmatter
+    view:
+      fields: [title, date, draft]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: draft
+        label: Hidden (draft)
+        description: Leave on until the article is approved.
+        type: boolean
+        default: true
+      - name: date
+        label: Publish date
+        type: date
+        options:
+          format: yyyy-MM-dd
+      - name: author
+        label: Author
+        type: string
+        default: PictureThis Production
+      - name: summary
+        label: Summary
+        description: Shown under the title and on the blog cards.
+        type: text
+        options:
+          maxlength: 280
+      - name: photo
+        label: Main photo
+        type: image
+      - name: photo_caption
+        label: Photo caption
+        type: string
+      - name: pull_quote
+        label: Pull quote
+        description: Optional. Featured above the article unless the article already opens with the same words.
+        type: text
+      - name: body
+        label: Article
+        type: rich-text
+        options:
+          format: markdown
+
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/projects
+    filename: "{primary}.md"
+    format: yaml-frontmatter
+    view:
+      fields: [title, status, draft]
+      primary: title
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: draft
+        label: Hidden (draft)
+        type: boolean
+        default: true
+      - name: type
+        label: Type
+        description: For example "Training event".
+        type: string
+      - name: status
+        label: Status
+        description: For example "Held" or "Planned".
+        type: string
+      - name: summary
+        label: Summary
+        type: text
+      - name: photo
+        label: Photo
+        type: image
+      - name: body
+        label: Description
+        type: rich-text
+        options:
+          format: markdown
+
+  - name: settings
+    label: Site settings
+    type: file
+    path: src/data/site.json
+    format: json
+    fields:
+      - name: announcement
+        label: Announcement bar (top of every page)
+        type: object
+        fields:
+          - name: lead
+            label: Bold part
+            type: string
+            required: true
+          - name: detail
+            label: Rest of the line
+            type: string
+            required: true
+      - name: cohort
+        label: Next cohort wording
+        description: Used across the site, for example in "Apply for the January cohort" and the "Come as you are" banners.
+        type: object
+        fields:
+          - name: name
+            label: Cohort name
+            description: For example "January cohort" or "September cohort".
+            type: string
+            required: true
+          - name: line
+            label: Cohort details line
+            description: For example "January cohort · Twenty places · Saturdays 10:00 AM–2:00 PM".
+            type: string
+            required: true
+          - name: applications
+            label: Applications sentence
+            description: For example "Applications are open for January."
+            type: string
+            required: true
+      - name: donationUrl
+        label: Online donation link (Zeffy)
+        description: Leave empty until Zeffy is live; the Donate page shows the pledge form meanwhile. Once set, it shows a Donate online button.
+        type: string
+        pattern:
+          regex: "^(https://.+)?$"
+          message: Use a full https:// link, or leave empty

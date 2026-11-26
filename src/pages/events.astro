@@ -1,5 +1,139 @@
 ---
-import DesignPage from "../layouts/DesignPage.astro";
-import design from "../design/events.json";
+import EventCard from "../components/EventCard.astro";
+import PageHero from "../components/PageHero.astro";
+import Site from "../layouts/Site.astro";
+import "../styles/events.css";
+import { isPast, publishedEvents } from "../lib/events";
+
+const events = await publishedEvents();
+const upcoming = events.filter((e) => !isPast(e));
+const past = events.filter((e) => isPast(e)).reverse();
+const formats = [...new Set(events.map((e) => e.data.format))].sort();
+const count = (list: typeof events, host?: string) => list.filter((e) => !host || e.data.host === host).length;
 ---
-<DesignPage title="Events" design={design} description="Upcoming PictureThis cohorts and training sessions at Faithfire Production and partner venues across the GTA." />
+<Site title="Events" description="PictureThis cohorts and training sessions, plus events from our partners across the GTA.">
+  <PageHero eyebrow="Events" title="Get together. Get hands on."/>
+  <section class="ev-page" aria-labelledby="ev-heading">
+    <div class="ev-intro">
+      <h2 id="ev-heading" class="ev-visually-hidden">Find an event</h2>
+      <p>PictureThis cohorts and training sessions, events from the partners we work with, and community events we’re glad to share. Free to join unless it says otherwise. Please check with the organiser before travelling.</p>
+    </div>
+
+    <div class="ev-controls" data-ev-controls hidden>
+      <div class="ev-seg" role="group" aria-label="Show events from">
+        <button type="button" data-show="all" aria-pressed="true">All events <span data-count="all">{count(upcoming)}</span></button>
+        <button type="button" data-show="picturethis" aria-pressed="false">PictureThis events <span data-count="picturethis">{count(upcoming, "picturethis")}</span></button>
+        <button type="button" data-show="partner" aria-pressed="false">Partner events <span data-count="partner">{count(upcoming, "partner")}</span></button>
+        <button type="button" data-show="community" aria-pressed="false">Community events <span data-count="community">{count(upcoming, "community")}</span></button>
+      </div>
+      <div class="ev-row">
+        <div class="ev-when" role="group" aria-label="Time">
+          <button type="button" data-when="upcoming" aria-pressed="true">Upcoming</button>
+          <button type="button" data-when="past" aria-pressed="false">Past</button>
+        </div>
+        <label class="ev-search">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <span class="ev-visually-hidden">Search events</span>
+          <input type="search" data-q placeholder="Search events" autocomplete="off"/>
+        </label>
+      </div>
+      {formats.length > 1 && (
+        <div class="ev-chips" role="group" aria-label="Format">
+          {formats.map((f) => <button type="button" data-format={f} aria-pressed="false">{f}</button>)}
+        </div>
+      )}
+    </div>
+
+    <p class="ev-count" data-ev-count aria-live="polite">{upcoming.length} upcoming {upcoming.length === 1 ? "event" : "events"}</p>
+
+    <div class="ev-list" data-ev-list>
+      {upcoming.map((e, i) => <EventCard event={e} featured={i === 0}/>)}
+      {past.map((e) => <EventCard event={e}/>)}
+    </div>
+
+    <div class="ev-empty" data-ev-empty hidden>
+      <h3 data-empty-title>No events here yet.</h3>
+      <p data-empty-text>Check back soon, or see all events.</p>
+      <button type="button" class="ev-link-button" data-reset>Show all upcoming events</button>
+    </div>
+
+    <aside class="ev-partner" aria-labelledby="ev-partner-title">
+      <div>
+        <p class="ev-kicker">Partners</p>
+        <h3 id="ev-partner-title">Running something for young people or crews in the GTA?</h3>
+        <p>We list events from venues, churches and community organisations we work with.</p>
+      </div>
+      <a class="ev-cta" href="/partners/">Partner with us</a>
+    </aside>
+  </section>
+
+  <script is:inline>
+  (() => {
+    const root = document.querySelector('.ev-page');
+    if (!root) return;
+    const controls = root.querySelector('[data-ev-controls]');
+    const cards = [...root.querySelectorAll('[data-event]')];
+    const list = root.querySelector('[data-ev-list]');
+    const empty = root.querySelector('[data-ev-empty]');
+    const countEl = root.querySelector('[data-ev-count]');
+    const q = root.querySelector('[data-q]');
+    const today = new Date().toISOString().slice(0, 10);
+    // "Past" is worked out in the browser as well, so it stays right between rebuilds.
+    cards.forEach((c) => { c.dataset.past = String(Boolean(c.dataset.last) && c.dataset.last < today); });
+
+    const params = new URLSearchParams(location.search);
+    const state = {
+      show: ['picturethis', 'partner', 'community'].includes(params.get('show')) ? params.get('show') : 'all',
+      when: params.get('when') === 'past' ? 'past' : 'upcoming',
+      q: params.get('q') ?? '',
+      formats: new Set(params.getAll('format')),
+    };
+    q.value = state.q;
+    controls.hidden = false;
+
+    const labels = { all: 'events', picturethis: 'PictureThis events', partner: 'partner events', community: 'community events' };
+    function apply() {
+      const term = state.q.trim().toLowerCase();
+      const inTime = (c) => (c.dataset.past === 'true') === (state.when === 'past');
+      const base = cards.filter((c) => inTime(c)
+        && (!term || c.dataset.search.includes(term))
+        && (!state.formats.size || state.formats.has(c.dataset.format)));
+      for (const key of ['all', 'picturethis', 'partner', 'community']) {
+        root.querySelector(`[data-count="${key}"]`).textContent = base.filter((c) => key === 'all' || c.dataset.host === key).length;
+      }
+      const shown = base.filter((c) => state.show === 'all' || c.dataset.host === state.show);
+      const ordered = state.when === 'past' ? shown.slice().reverse() : shown;
+      cards.forEach((c) => { c.hidden = true; c.classList.remove('ev-card--featured'); });
+      ordered.forEach((c, i) => { c.hidden = false; list.append(c); if (i === 0 && state.when === 'upcoming') c.classList.add('ev-card--featured'); });
+      empty.hidden = shown.length > 0;
+      const noun = shown.length === 1 ? labels[state.show].replace(/s$/, '') : labels[state.show];
+      countEl.textContent = `${shown.length} ${state.when} ${noun}`;
+      if (!shown.length) {
+        root.querySelector('[data-empty-title]').textContent = state.when === 'past'
+          ? `No past ${labels[state.show]} yet.` : `No upcoming ${labels[state.show]} right now.`;
+        root.querySelector('[data-empty-text]').textContent = state.when === 'past'
+          ? 'Events appear here once they have happened.' : 'New dates are added as they are confirmed. Check back soon.';
+      }
+      root.querySelectorAll('[data-show]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.show === state.show)));
+      root.querySelectorAll('[data-when]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.when === state.when)));
+      root.querySelectorAll('.ev-chips [data-format]').forEach((b) => b.setAttribute('aria-pressed', String(state.formats.has(b.dataset.format))));
+      const next = new URLSearchParams();
+      if (state.show !== 'all') next.set('show', state.show);
+      if (state.when !== 'upcoming') next.set('when', state.when);
+      if (state.q.trim()) next.set('q', state.q.trim());
+      state.formats.forEach((f) => next.append('format', f));
+      history.replaceState(null, '', `${location.pathname}${next.toString() ? `?${next}` : ''}${location.hash}`);
+    }
+    root.querySelectorAll('[data-show]').forEach((b) => b.addEventListener('click', () => { state.show = b.dataset.show; apply(); }));
+    root.querySelectorAll('[data-when]').forEach((b) => b.addEventListener('click', () => { state.when = b.dataset.when; apply(); }));
+    root.querySelectorAll('.ev-chips [data-format]').forEach((b) => b.addEventListener('click', () => {
+      state.formats.has(b.dataset.format) ? state.formats.delete(b.dataset.format) : state.formats.add(b.dataset.format); apply();
+    }));
+    q.addEventListener('input', () => { state.q = q.value; apply(); });
+    root.querySelector('[data-reset]').addEventListener('click', () => {
+      Object.assign(state, { show: 'all', when: 'upcoming', q: '' }); state.formats.clear(); q.value = ''; apply();
+    });
+    apply();
+  })();
+  </script>
+</Site>

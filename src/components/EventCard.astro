@@ -1,0 +1,32 @@
+---
+import { dateTile, hostLabel, isPast, lastDay, type SiteEvent } from "../lib/events";
+const { event, featured = false } = Astro.props as { event: SiteEvent; featured?: boolean };
+const d = event.data;
+const tile = dateTile(event);
+const past = isPast(event);
+const href = `/events/${event.id}/`;
+---
+<article class:list={["ev-card", { "ev-card--featured": featured, "ev-card--past": past }]}
+  data-event data-host={d.host} data-format={d.format} data-last={lastDay(event) ?? ""}
+  data-search={`${d.title} ${d.summary} ${d.hostName ?? ""} ${d.format} ${d.location}`.toLowerCase()}>
+  {d.photo && <a class="ev-photo" href={href} tabindex="-1" aria-hidden="true"><img src={d.photo} alt="" loading="lazy" decoding="async"/></a>}
+  <div class="ev-tile" aria-hidden="true"><span>{tile.top}</span><strong>{tile.big}</strong><span>{tile.bottom}</span></div>
+  <div class="ev-body">
+    <p class="ev-badges">
+      <span class:list={["ev-host", `ev-host--${d.host}`]}>{hostLabel(d.host, d.hostName)}</span>
+      <span class="ev-format">{d.format}</span>
+      {past && <span class="ev-format">Past</span>}
+    </p>
+    <h3 class="ev-title"><a href={href}>{d.title}</a></h3>
+    <p class="ev-summary">{d.summary}</p>
+    <ul class="ev-facts">
+      <li><span>When</span>{d.dateLabel}{d.time && <> · {d.time}</>}</li>
+      <li><span>Where</span>{d.location}</li>
+      {d.cost && <li><span>Cost</span>{d.cost}{d.places && <> · {/^\d+$/.test(d.places) ? `${d.places} places` : `${d.places[0].toUpperCase()}${d.places.slice(1)}`}</>}</li>}
+    </ul>
+    <div class="ev-actions">
+      <a class="ev-link" href={href}>Event details<span aria-hidden="true"> →</span></a>
+      {!past && d.cta && <a class="ev-cta" href={d.cta.href}>{d.cta.label}</a>}
+    </div>
+  </div>
+</article>
