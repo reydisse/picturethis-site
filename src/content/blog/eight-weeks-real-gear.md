@@ -13,7 +13,7 @@ draft: false
 
 Week 1 is all about cables, connectors, and signal flow. You coil, tape, and test every type of cable we own, then trace a signal from a microphone to a speaker and find the break we've hidden in it. Week 2 puts you on digital consoles, the Wing and the X32, building a show file from scratch: inputs, gains, EQ, routing, and scenes.
 
-<img src="/images/gear-library-cables.jpg" alt="Cables and connectors, the week 1 toolkit" loading="lazy" decoding="async" />
+<img src="/images/outdoor-audio-console.jpg" alt="Hands on a digital mixing console during a show" loading="lazy" decoding="async" />
 
 
 Week 3, you mix a live band at Faithfire, starting with the vocals, then bringing in everything else. You'll also learn what to do when feedback kicks in anyway. Week 4 is all about cameras and video switching: frame, focus, and follow, then take the director's chair and call a two-camera rehearsal over comms.
