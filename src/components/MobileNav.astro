@@ -1,0 +1,86 @@
+---
+// Phone and tablet header: the same compact bar and bottom-sheet menu as the Home page,
+// so every page shares one mobile navigation. Shown below 1000px, where Home switches.
+const path = Astro.url.pathname;
+const links = [
+  ["Home", "/"],
+  ["Programs", "/programs/"],
+  ["Faithfire", "/faithfire/"],
+  ["Projects", "/projects/"],
+  ["Blog", "/blog/"],
+  ["Events", "/events/"],
+  ["Partners", "/partners/"],
+  ["Get involved", "/get-involved/"],
+];
+const current = (href: string) => href === path || (href !== "/" && path.startsWith(href));
+---
+<header class="pt-mh">
+  <a class="pt-mark" href="/">PICTURETHIS<br/>PRODUCTION</a>
+  <button type="button" class="pt-ib" aria-label="Open menu" aria-haspopup="dialog" aria-controls="pt-menu" data-pt-menu-open>
+    Menu<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24" width="22"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+  </button>
+</header>
+<dialog class="pt-sheet" id="pt-menu" aria-label="Menu">
+  <div class="pt-grab"></div>
+  <div class="pt-shd">
+    <span class="pt-eb">Menu</span>
+    <button type="button" class="pt-ib pt-close" aria-label="Close" data-pt-menu-close>
+      <svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24" width="22"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+    </button>
+  </div>
+  <nav aria-label="Main" class="pt-navl">
+    {links.map(([label, href]) => (
+      <a href={href} class={current(href) ? "pt-cur" : undefined} aria-current={current(href) ? "page" : undefined}>
+        {label}<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24" width="18"><path d="m9 6 6 6-6 6"></path></svg>
+      </a>
+    ))}
+  </nav>
+  <div class="pt-actions">
+    <a class="pt-btn pt-btn-o" href="/donate/">Donate</a>
+    <a class="pt-btn" href="/get-involved/#join">Apply now</a>
+  </div>
+</dialog>
+<script is:inline>
+(() => {
+  const menu = document.getElementById('pt-menu');
+  if (!menu || typeof menu.showModal !== 'function') return;
+  document.querySelector('[data-pt-menu-open]').addEventListener('click', () => menu.showModal());
+  menu.addEventListener('click', (event) => {
+    if (event.target.closest('[data-pt-menu-close]') || event.target.closest('.pt-navl a, .pt-actions a')) { menu.close(); return; }
+    if (event.target !== menu) return;
+    const box = menu.getBoundingClientRect();
+    if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) menu.close();
+  });
+  // Never leave the sheet open when the window grows past the phone layout.
+  matchMedia('(min-width: 1000px)').addEventListener('change', (query) => { if (query.matches && menu.open) menu.close(); });
+})();
+</script>
+<style is:global>
+.pt-mh,.pt-sheet{font-family:"DM Sans",sans-serif}
+.pt-mh{display:none}
+@media (max-width:999px){
+  .site-header{display:none!important}
+  .pt-bar{padding:8px 24px!important;line-height:1.5}
+  .pt-bar a{display:none!important}
+  .pt-mh{display:flex;align-items:center;justify-content:space-between;padding:8px 8px 8px 24px;border-bottom:1px solid #CCD5ED;background:#FFFFFF}
+}
+.pt-mark{font-family:"Space Grotesk",sans-serif;font-size:16px;font-weight:700;line-height:1.05;letter-spacing:-.01em;color:#203DA5;text-decoration:none;display:inline-block;max-width:none;padding:0;border:0}
+.pt-ib{min-width:48px;height:48px;border:0;background:transparent;color:#203DA5;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 12px;margin:0;font:inherit;font-size:16px;font-weight:700;cursor:pointer}
+.pt-sheet{color:#14265B;border:0;border-top:4px solid #203DA5;margin:auto 0 0;width:100%;max-width:none;max-height:calc(100dvh - 24px);overflow:auto;position:fixed;left:0;right:0;bottom:0;background:#FFFFFF;padding:8px 24px 32px;box-shadow:0 -16px 48px rgba(20,38,91,.3)}
+.pt-sheet[open]{display:flex;flex-direction:column;gap:16px}
+.pt-sheet:not([open]){display:none}
+.pt-sheet::backdrop{background:rgba(20,38,91,.64)}
+html:has(.pt-sheet[open]){overflow:hidden}
+.pt-grab{width:40px;height:4px;background:#CCD5ED;margin:4px auto 0}
+.pt-shd{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.pt-eb{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#203DA5}
+.pt-close{margin-right:-12px;padding:0}
+.pt-sheet .pt-navl{display:block!important;margin:0;padding:0;font-size:inherit}
+.pt-sheet .pt-navl a{display:flex;align-items:center;justify-content:space-between;min-height:52px;padding:0;border:0;border-bottom:1px solid #CCD5ED;font-size:19px;font-weight:600;color:#14265B;text-decoration:none}
+.pt-sheet .pt-navl a svg{color:#203DA5;flex:none}
+.pt-sheet .pt-navl a.pt-cur{color:#203DA5;box-shadow:inset 3px 0 0 #203DA5;padding-left:16px}
+.pt-actions{display:flex;gap:8px}
+.pt-btn{flex:2;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 20px;margin:0;font:inherit;font-weight:700;text-decoration:none;border:1px solid #203DA5;background:#203DA5;color:#FFFFFF;white-space:nowrap}
+.pt-btn-o{flex:1;background:transparent;color:#203DA5}
+.pt-mh :focus-visible,.pt-sheet :focus-visible{outline:3px solid #203DA5;outline-offset:3px}
+</style>
