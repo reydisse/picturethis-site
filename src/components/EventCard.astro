@@ -1,13 +1,15 @@
 ---
-import { dateTile, hostLabel, isPast, lastDay, type SiteEvent } from "../lib/events";
+import { dateTile, hostLabel, isPast, lastDay, monthGroup, type SiteEvent } from "../lib/events";
 const { event, featured = false } = Astro.props as { event: SiteEvent; featured?: boolean };
 const d = event.data;
 const tile = dateTile(event);
 const past = isPast(event);
 const href = `/events/${event.id}/`;
+const group = monthGroup(event);
 ---
 <article class:list={["ev-card", { "ev-card--featured": featured, "ev-card--past": past }]}
   data-event data-host={d.host} data-format={d.format} data-last={lastDay(event) ?? ""}
+  data-month={group.key} data-month-label={group.label}
   data-search={`${d.title} ${d.summary} ${d.hostName ?? ""} ${d.format} ${d.location}`.toLowerCase()}>
   {d.photo && <a class="ev-photo" href={href} tabindex="-1" aria-hidden="true"><img src={d.photo} alt="" loading="lazy" decoding="async"/></a>}
   <div class="ev-tile" aria-hidden="true"><span>{tile.top}</span><strong>{tile.big}</strong><span>{tile.bottom}</span></div>

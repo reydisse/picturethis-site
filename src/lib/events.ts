@@ -40,6 +40,16 @@ export function isPast(event: SiteEvent, today = new Date().toISOString().slice(
   return last !== undefined && last < today;
 }
 
+/** Month the event falls in, for the list headings: key YYYY-MM (or "tbc") and a label. */
+export function monthGroup(event: SiteEvent): { key: string; label: string } {
+  const { start, month } = event.data;
+  const key = start ? start.toISOString().slice(0, 7) : month ?? "tbc";
+  if (key === "tbc") return { key, label: "Date to be confirmed" };
+  const [year, m] = key.split("-").map(Number);
+  const label = new Date(Date.UTC(year, m - 1, 1)).toLocaleDateString("en-CA", { month: "long", year: "numeric", timeZone: "UTC" });
+  return { key, label };
+}
+
 /** The big date tile: day and month when fixed, month only, or "TBC". */
 export function dateTile(event: SiteEvent): { top: string; big: string; bottom: string } {
   const { start, month } = event.data;

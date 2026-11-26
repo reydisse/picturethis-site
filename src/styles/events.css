@@ -137,3 +137,10 @@ article.ev-card--past .ev-tile{background:var(--ev-muted)}
   .evd{width:calc(100% - 32px)}
 }
 .ev-card--featured:not(:has(.ev-photo))::before{background:var(--ev-soft)}
+
+/* Batches and month headings */
+.ev-page h3.ev-month{margin:20px 0 0;padding-bottom:10px;border-bottom:2px solid var(--ev-blue);font:500 clamp(20px,2vw,24px)/1.2 var(--font-civic,"Space Grotesk",sans-serif);letter-spacing:-.02em;color:var(--ev-ink)}
+.ev-page h3.ev-month:first-child{margin-top:0}
+.ev-more{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:32px;text-align:center}
+.ev-more[hidden]{display:none}
+.ev-more-note{margin:0;font-size:14px;color:var(--ev-muted)}
