@@ -2,8 +2,16 @@ import { getCollection, type CollectionEntry } from "astro:content";
 
 export type SiteEvent = CollectionEntry<"events">;
 /** Badge text: whose event this is. */
-export function hostLabel(host: string, hostName: string): string {
-  return host === "partner" ? `Partner · ${hostName}` : host === "community" ? `Community · ${hostName}` : "PictureThis";
+export function hostLabel(host: string, hostName?: string): string {
+  if (host === "picturethis") return "PictureThis";
+  const kind = host === "partner" ? "Partner" : "Community";
+  return hostName ? `${kind} · ${hostName}` : `${kind} event`;
+}
+
+/** Who runs it, in words: the host's name, or a neutral fallback. */
+export function hostName(event: SiteEvent): string {
+  const { host, hostName } = event.data;
+  return host === "picturethis" ? "PictureThis Production" : hostName || "its organiser";
 }
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

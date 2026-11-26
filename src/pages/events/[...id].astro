@@ -3,7 +3,7 @@ import EventCard from '../../components/EventCard.astro';
 import Site from '../../layouts/Site.astro';
 import '../../styles/events.css';
 import { render } from 'astro:content';
-import { dateTile, hostLabel, icsHref, isPast, publishedEvents, type SiteEvent } from '../../lib/events';
+import { dateTile, hostLabel, hostName, icsHref, isPast, publishedEvents, type SiteEvent } from '../../lib/events';
 export async function getStaticPaths(){ return (await publishedEvents()).map(event=>({params:{id:event.id},props:{event}})); }
 const { event } = Astro.props as { event: SiteEvent };
 const { Content } = await render(event);
@@ -35,7 +35,7 @@ const more = (await publishedEvents()).filter(x => x.id !== event.id && !isPast(
     <div class="evd-main">
       <div class="evd-body">
         <Content/>
-        {d.host !== 'picturethis' && <p class="evd-note">{d.host === 'community' ? 'Community event' : 'Partner event'}: run by {d.hostName}, not PictureThis Production. Registration and questions go to them.</p>}
+        {d.host !== 'picturethis' && <p class="evd-note">{d.host === 'community' ? 'Community event' : 'Partner event'}: run by {hostName(event)}, not PictureThis Production. Registration and questions go to them.</p>}
       </div>
       <aside class="evd-card" aria-labelledby="evd-details">
         <h2 id="evd-details">Event details</h2>
@@ -45,7 +45,7 @@ const more = (await publishedEvents()).filter(x => x.id !== event.id && !isPast(
           {d.cost && <div><dt>Cost</dt><dd>{d.cost}</dd></div>}
           {d.places && <div><dt>Places</dt><dd>{d.places}</dd></div>}
           {d.audience && <div><dt>For</dt><dd>{d.audience}</dd></div>}
-          <div><dt>Host</dt><dd>{d.hostName}</dd></div>
+          <div><dt>Host</dt><dd>{hostName(event)}</dd></div>
         </dl>
         <div class="evd-actions">
           {!past && d.cta && <a class="ev-cta" href={d.cta.href}>{d.cta.label}</a>}
