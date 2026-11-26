@@ -1,6 +1,9 @@
 ---
 import html from "../design/header.html?raw";
+import MobileNav from "./MobileNav.astro";
 const path=Astro.url.pathname;
-const markup=html.replace(/<a ([^>]*href="([^"#]+)"[^>]*)>/g,(all,attrs,href)=>`<a ${attrs}${(href===path || (href!=="/" && path.startsWith(href))) ? ' aria-current="page"' : ""}>`);
+// The first element is the announcement strip; MobileNav restyles it to match Home on phones.
+const markup=html.replace(/^<div /, '<div class="pt-bar" ').replace(/<a ([^>]*href="([^"#]+)"[^>]*)>/g,(all,attrs,href)=>`<a ${attrs}${(href===path || (href!=="/" && path.startsWith(href))) ? ' aria-current="page"' : ""}>`);
 ---
 <Fragment set:html={markup}/>
+<MobileNav/>
