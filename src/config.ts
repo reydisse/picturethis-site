@@ -1,7 +1,10 @@
 export const contactEmail = "hello@picturethis-production.com";
 
-/** Where the site's forms deliver. FormSubmit forwards each submission to the inbox above. */
-export const formEndpoint = `https://formsubmit.co/ajax/${contactEmail}`;
+/**
+ * Where the site's forms deliver: the Pages Function in functions/api/enquiry.js. It emails
+ * the inbox above through Resend and sends the person an acknowledgement chosen by `interest`.
+ */
+export const formEndpoint = "/api/enquiry";
 
 /**
  * The online donation page (Zeffy). Leave empty until it is live: /donate/ then shows a

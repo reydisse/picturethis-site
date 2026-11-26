@@ -45,6 +45,7 @@ const online = donationUrl !== "";
         data-endpoint={formEndpoint} data-contact={contactEmail}
         data-subject="Gift pledge: ${amount} CAD, {frequency}"
         data-success="Thank you! Your pledge has been sent. We will email you within a week with how to complete your gift.">
+        <input type="hidden" name="interest" value="Support the program"/>
         <label class="fld"><span class="lab">Your name</span><input class="inp" name="name" autocomplete="name" required/></label>
         <label class="fld"><span class="lab">Email address</span><input class="inp" name="email" type="email" autocomplete="email" required/></label>
         <label class="fld"><span class="lab">Amount (CAD)</span><input class="inp" name="amount" inputmode="decimal" required pattern="\$?\s*[0-9]+(\.[0-9]{1,2})?" data-error="Enter an amount in dollars, for example 90."/></label>
