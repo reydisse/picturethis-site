@@ -1,11 +1,27 @@
 ---
 import PageHero from "../components/PageHero.astro";
-import ApplyBand from "../components/ApplyBand.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import SiteFooter from "../components/SiteFooter.astro";
-import NextSteps from "../components/NextSteps.astro";
-import "../styles/civic.css";
-import "../styles/doop.css";
-import { contactEmail, formEndpoint } from "../config";
+import Site from "../layouts/Site.astro";
+import { contactEmail } from "../config";
 ---
-<!doctype html><html lang="en-CA"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Our standards | PictureThis Production</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"/></head><body><a href="#main">Skip to content</a><SiteHeader/><main id="main"><PageHero eyebrow="Policies" title="Our standards" id="34598087" alt="Professional camera operator in a production venue"/><section class="page-opening"><p>These lines are public promises. The full policies sit behind them and are available to funders, partners and families on request.</p></section><section><ul><li>Every mentor passes a Vulnerable Sector Check before working with participants and follows a written code of conduct.</li><li>Mentors and participants meet in crew spaces, never alone off-site.</li><li>Participants aged 16 and 17 join with a parent or guardian's consent, and a parent or guardian can reach the program lead at any time.</li><li>Photos and recordings of participants are used only with consent, and consent can be withdrawn.</li><li>The program is free, and it stays free. No fees, no gear purchases, no paid upsells.</li><li>Anyone can raise a concern, about safety, conduct or anything else, and it will be heard by a named person, not a form.</li></ul></section><ApplyBand/></main><SiteFooter/></body></html>
+<Site title="Our standards" description="The public promises behind PictureThis Production: safeguarding, consent, a free program, how to raise a concern and how we handle what you send us.">
+  <PageHero eyebrow="Policies" title="Our standards"/>
+  <section class="page-opening"><p>These lines are public promises. The full policies sit behind them and are available to funders, partners and families on request.</p></section>
+  <section>
+    <ul>
+      <li>Every mentor passes a Vulnerable Sector Check before working with participants and follows a written code of conduct.</li>
+      <li>Mentors and participants meet in crew spaces, never alone off-site.</li>
+      <li>Participants aged 16 and 17 join with a parent or guardian's consent, and a parent or guardian can reach the program lead at any time.</li>
+      <li>Photos and recordings of participants are used only with consent, and consent can be withdrawn.</li>
+      <li>The program is free, and it stays free. No fees, no gear purchases, no paid upsells.</li>
+      <li>Anyone can raise a concern, about safety, conduct or anything else, and it will be heard by a named person, not a form. Email <a href={`mailto:${contactEmail}?subject=Concern`}>{contactEmail}</a> and the program lead will reply to you personally.</li>
+    </ul>
+  </section>
+  <section id="privacy" aria-labelledby="privacy-title">
+    <h2 id="privacy-title">What you send us</h2>
+    <ul>
+      <li>When you use a form on this site, your name, email address and choices are delivered to our inbox by FormSubmit, an email forwarding service. We use them only to reply to you.</li>
+      <li>This site takes no payments and never asks for card or banking details.</li>
+      <li>To see or delete what you have sent us, email <a href={`mailto:${contactEmail}?subject=My%20details`}>{contactEmail}</a>.</li>
+    </ul>
+  </section>
+</Site>

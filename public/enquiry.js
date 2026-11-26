@@ -17,6 +17,8 @@ document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
     status.className = designed ? tone : '';
     status.hidden = false;
   };
+  const endpoint = form.dataset.endpoint;
+  const contact = form.dataset.contact;
   const fields = [...form.querySelectorAll('input, select')];
   const errors = fields.map((field, index) => {
     const error = document.createElement('span');
@@ -33,8 +35,8 @@ document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
     if (button.disabled) return;
     let invalid = false;
     fields.forEach((field, index) => {
-      const valid = field.checkValidity() && field.value.trim() !== '';
-      errors[index].textContent = valid ? '' : field.type === 'email' ? 'Enter a valid email address.' : 'Please complete this field.';
+      const valid = field.checkValidity() && (!field.required || field.value.trim() !== '');
+      errors[index].textContent = valid ? '' : field.dataset.error ?? (field.type === 'email' ? 'Enter a valid email address.' : 'Please complete this field.');
       errors[index].hidden = valid;
       field.setAttribute('aria-invalid', String(!valid));
       invalid ||= !valid;
@@ -50,15 +52,17 @@ document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
     button.setAttribute('aria-busy', 'true');
     announce('Sending your enquiry…');
     const payload = Object.fromEntries(new FormData(form));
-    payload._subject = `Website enquiry: ${location.pathname === '/' ? 'Home' : 'Get Involved'} form — ${payload.interest}`;
+    payload._subject = form.dataset.subject
+      ? form.dataset.subject.replace(/\{(\w+)\}/g, (_, key) => payload[key] ?? '')
+      : `Website enquiry: ${location.pathname === '/' ? 'Home' : 'Get Involved'} form — ${payload.interest}`;
     payload._template = 'table';
     try {
-      const response = await fetch('https://formsubmit.co/ajax/hello@picturethis-production.com', {
+      const response = await fetch(endpoint, {
         method: 'POST', headers: {'Content-Type': 'application/json', Accept: 'application/json'}, body: JSON.stringify(payload)
       });
       const result = await response.json();
       if (!response.ok || (result.success !== true && result.success !== 'true')) throw new Error('Submission failed');
-      const message = 'Thank you! Your enquiry has been sent. We look forward to being in touch.';
+      const message = form.dataset.success ?? 'Thank you! Your enquiry has been sent. We look forward to being in touch.';
       if (success) {
         const confirmation = success.querySelector('[data-status-message]');
         confirmation.textContent = message;
@@ -74,7 +78,7 @@ document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
         status.focus();
       }
     } catch {
-      announce('Your enquiry could not be sent. Please try again or contact hello@picturethis-production.com directly.', 'alert');
+      announce(`Your enquiry could not be sent. Please try again or contact ${contact} directly.`, 'alert');
       button.removeAttribute('aria-busy');
       button.disabled = false;
       button.innerHTML = original;

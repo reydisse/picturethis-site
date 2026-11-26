@@ -6,6 +6,7 @@ import givingDesktop from '../design/home-giving-desktop.html?raw';
 import givingMobile from '../design/home-giving-mobile.html?raw';
 import enquiry from '../design/home-enquiry.html?raw';
 import enquiryForm from '../design/enquiry-form.html?raw';
+import { withEnquiryConfig } from '../lib/enquiry';
 import '../styles/home.css';
 ---
 <!doctype html>
@@ -14,6 +15,7 @@ import '../styles/home.css';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Home | PictureThis Production</title>
+    <meta name="description" content="Free, hands-on training and mentoring in sound, cameras, lighting and streaming across the Greater Toronto Area. Eight Saturdays, real gear, real crews." />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -28,7 +30,7 @@ import '../styles/home.css';
     <Fragment set:html={menu} />
     <Fragment set:html={givingDesktop} />
     <Fragment set:html={givingMobile} />
-    <Fragment set:html={enquiry.replace('<!-- enquiry-form -->', () => enquiryForm)} />
+    <Fragment set:html={withEnquiryConfig(enquiry.replace('<!-- enquiry-form -->', () => enquiryForm))} />
     <script src="/enquiry.js" defer></script>
     <script>
       import { initializeTestimonials } from '../scripts/testimonials';

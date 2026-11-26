@@ -7,7 +7,6 @@ photo: "/images/backstage-sound-crew.jpg"
 photo_caption: ""
 pull_quote: "A young person deserves more than a warning about what not to do. They deserve meaningful opportunities, people who show up and somewhere to contribute."
 draft: false
-status_note: "Research-informed editorial draft. For review before publication."
 ---
 
 
@@ -36,7 +35,7 @@ Belonging is not a slogan here. It is a Saturday morning, a crew that knows your
 
 ## Research & further reading
 
-[1] Public Safety Canada — Youth gang involvement: What are the risk factors?
-[2] Public Safety Canada — Youth Gang Prevention Fund
+1. Public Safety Canada — [Youth gang involvement: What are the risk factors?](https://www.publicsafety.gc.ca/cnt/rsrcs/pblctns/yth-gng-nvlvmnt/index-en.aspx)
+2. Public Safety Canada — [Youth Gang Prevention Fund](https://www.publicsafety.gc.ca/cnt/cntrng-crm/crm-prvntn/fndng-prgrms/yth-gng-prvntn-fnd-en.aspx)
 
 *These sources inform the approach; they do not evaluate PictureThis's outcomes.*
