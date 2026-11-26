@@ -10,6 +10,16 @@ All in `src/config.ts`:
 - `formEndpoint`: where forms deliver: `/api/enquiry`, the Pages Function in `functions/api/enquiry.js`. It emails `contactEmail` through Resend (the `RESEND_API_KEY` Pages secret) and sends the person an acknowledgement chosen by their `interest`. Deploy from the repository root so `functions/` is included.
 - `donationUrl`: the Zeffy donation page. While it is empty, `/donate/` shows a pledge form (nothing is charged; you follow up by email). Once you set it, `/donate/` shows a "Donate online" button and the gift cards link to Zeffy.
 
+## Events
+
+Each event is a Markdown file in `src/content/events/`. The Events page shows them under All, PictureThis, Partner and Community events, split into upcoming and past.
+
+- `host`: `picturethis` (ours), `partner` (an organisation we work with, named in `hostName`), or `community` (a community event we share but don't run, named in `hostName`).
+- Dates: set `start` (and `end` for multi-day events) as `YYYY-MM-DD` once fixed. Until then use `month: "YYYY-MM"`, or neither for "Date TBC". `dateLabel` is the text people see.
+- `cta` is the main button, such as `{ label: "Apply now", href: "/get-involved/#join" }`. Leave it out until a real link exists.
+- Events move to Past by themselves after their last day. Events with a fixed date get an "Add to calendar" button.
+- `draft: true` keeps an event off the site. `first-call.md` is drafted this way: First Call Collective runs it independently, so check the Local Leadership Grant rules before sharing it.
+
 ## Editorial workflow
 
 Chief drafts from program notes and photos. The editorial lead approves every article; merging the PR publishes through a manual build/deploy. Cadence follows cohort starts, show recaps, mentor spotlights and graduate milestones.

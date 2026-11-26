@@ -1,0 +1,139 @@
+/* Events catalogue and event pages. Scoped with ev-/evd- classes; selectors are specific enough
+   to beat the older civic.css element rules (article, button, img, ul, h3). */
+.ev-page{--ev-blue:var(--color-civic,#203DA5);--ev-ink:var(--color-civic-ink,#14265B);--ev-muted:var(--color-civic-muted,#536185);--ev-line:var(--color-civic-line,#CCD5ED);--ev-soft:var(--color-civic-soft,#EEF2FC);--ev-amber:#B8741A;--ev-green:#1F6B4F}
+.ev-page,.evd{--ev-blue:var(--color-civic,#203DA5);--ev-ink:var(--color-civic-ink,#14265B);--ev-muted:var(--color-civic-muted,#536185);--ev-line:var(--color-civic-line,#CCD5ED);--ev-soft:var(--color-civic-soft,#EEF2FC);--ev-amber:#B8741A;--ev-green:#1F6B4F}
+main>section.ev-page{background:none;padding-top:40px;padding-bottom:96px}
+.ev-visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ev-intro p{font-size:clamp(18px,1.7vw,21px);line-height:1.55;color:var(--ev-muted);max-width:62ch;margin:0 0 36px}
+
+/* Controls */
+.ev-controls{display:grid;gap:18px;margin-bottom:28px}
+.ev-controls[hidden]{display:none}
+.ev-seg{display:flex;flex-wrap:wrap;gap:6px;padding:6px;background:var(--ev-soft);border-radius:999px;width:fit-content;max-width:100%}
+.ev-page .ev-seg button{margin:0;display:inline-flex;align-items:center;gap:10px;min-height:46px;padding:10px 20px;border:0;border-radius:999px;background:transparent;color:var(--ev-ink);font:600 15px/1.2 var(--font-ngo,"DM Sans",sans-serif);cursor:pointer;transition:background .15s,color .15s}
+.ev-page .ev-seg button span{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 7px;border-radius:999px;background:#fff;color:var(--ev-blue);font-size:12px;font-weight:700}
+.ev-page .ev-seg button[aria-pressed="true"]{background:var(--ev-blue);color:#fff;box-shadow:0 6px 18px rgb(32 61 165 / 25%)}
+.ev-page .ev-seg button[aria-pressed="true"] span{background:rgb(255 255 255 / 20%);color:#fff}
+.ev-page .ev-seg button:hover:not([aria-pressed="true"]){background:#fff}
+.ev-row{display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center;justify-content:space-between}
+.ev-when{display:flex;gap:28px;border-bottom:1px solid var(--ev-line)}
+.ev-page .ev-when button{margin:0;padding:10px 0;min-height:44px;border:0;background:none;color:var(--ev-muted);font:600 15px/1.2 var(--font-ngo,"DM Sans",sans-serif);cursor:pointer;box-shadow:inset 0 -3px 0 transparent}
+.ev-page .ev-when button[aria-pressed="true"]{color:var(--ev-blue);box-shadow:inset 0 -3px 0 var(--ev-blue)}
+.ev-search{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 16px;border:1px solid var(--ev-line);background:#fff;color:var(--ev-muted);width:min(360px,100%)}
+.ev-search:focus-within{border-color:var(--ev-blue);color:var(--ev-blue)}
+.ev-page .ev-search input{margin:0;padding:0;border:0;outline:0;background:none;font:inherit;font-size:15px;width:100%;color:var(--ev-ink)}
+.ev-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ev-page .ev-chips button{margin:0;min-height:38px;padding:6px 16px;border:1px solid var(--ev-line);border-radius:999px;background:#fff;color:var(--ev-ink);font:600 14px/1.2 var(--font-ngo,"DM Sans",sans-serif);cursor:pointer}
+.ev-page .ev-chips button[aria-pressed="true"]{border-color:var(--ev-ink);background:var(--ev-ink);color:#fff}
+.ev-count{margin:0 0 18px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ev-muted)}
+
+/* Cards */
+.ev-list{display:grid;gap:20px}
+article.ev-card{position:relative;display:grid;grid-template-columns:112px minmax(0,1fr);gap:0 28px;max-width:none;margin:0;padding:28px;border:1px solid var(--ev-line);background:#fff;transition:box-shadow .2s,transform .2s}
+article.ev-card:hover{box-shadow:0 18px 40px rgb(20 38 91 / 10%);transform:translateY(-2px)}
+article.ev-card[hidden]{display:none}
+.ev-card .ev-photo{display:none}
+.ev-tile{overflow-wrap:normal;word-break:keep-all;white-space:nowrap;display:flex;flex-direction:column;align-items:center;justify-content:center;align-self:start;min-height:112px;padding:12px 8px;background:var(--ev-blue);color:#fff;text-align:center;line-height:1.1}
+.ev-tile span{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+.ev-tile strong{font:500 34px/1.1 var(--font-civic,"Space Grotesk",sans-serif);letter-spacing:-.03em;margin:4px 0}
+.ev-card:has(.ev-host--partner) .ev-tile{background:var(--ev-amber)}
+.ev-card:has(.ev-host--community) .ev-tile{background:var(--ev-green)}
+.ev-badges{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;max-width:none}
+.ev-host,.ev-format{display:inline-flex;align-items:center;min-height:26px;padding:3px 11px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.ev-host--picturethis{background:var(--ev-blue);color:#fff}
+.ev-host--partner{border:1.5px solid var(--ev-amber);color:var(--ev-amber)}
+.ev-host--community{border:1.5px solid var(--ev-green);color:var(--ev-green)}
+.ev-format{background:var(--ev-soft);color:var(--ev-ink)}
+.ev-page h3.ev-title,.evd h3.ev-title{margin:0 0 10px;font:500 clamp(24px,2.3vw,30px)/1.15 var(--font-civic,"Space Grotesk",sans-serif);letter-spacing:-.03em;color:var(--ev-blue)}
+.ev-title a{text-decoration:none;color:inherit}
+.ev-title a::after{content:"";position:absolute;inset:0}
+.ev-title a:hover{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px}
+.ev-summary{margin:0 0 16px;color:var(--ev-ink);max-width:70ch}
+ul.ev-facts{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:6px;font-size:15px;color:var(--ev-ink)}
+ul.ev-facts li{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;margin:0;padding:0;border:0}
+ul.ev-facts li::before{content:none}
+ul.ev-facts span{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ev-muted);padding-top:2px}
+.ev-actions{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
+/* doop.css already styles .ev-link as an outlined button; keep that look as the secondary action. */
+.ev-page .ev-link,.evd .ev-link{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--ev-blue);text-decoration:none;background:#fff}
+.ev-page .ev-link:hover,.evd .ev-link:hover{background:var(--ev-soft)}
+.ev-cta{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:10px 22px;background:var(--ev-blue,#203DA5);color:#fff;font-weight:700;text-decoration:none;border:1px solid var(--ev-blue,#203DA5)}
+.ev-cta:hover{background:var(--ev-ink,#14265B)}
+.ev-page .ev-link-button,.evd .ev-link-button{display:inline-flex;align-items:center;justify-content:center;margin:0;min-height:46px;padding:10px 22px;border:1px solid var(--ev-blue);background:#fff;color:var(--ev-blue);font:700 15px/1.2 var(--font-ngo,"DM Sans",sans-serif);text-decoration:none;cursor:pointer}
+
+/* Featured: the next upcoming event */
+article.ev-card--featured{padding:56px 32px 32px;border-color:var(--ev-blue);box-shadow:0 22px 48px rgb(20 38 91 / 12%)}
+article.ev-card--featured:has(.ev-photo){grid-template-columns:minmax(0,44%) 112px minmax(0,1fr);padding:0}
+.ev-card--featured .ev-photo{display:block;grid-row:1;height:100%;min-height:320px;overflow:hidden}
+article.ev-card--featured .ev-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(1)}
+.ev-card--featured:has(.ev-photo) .ev-tile{margin:32px 0 0 32px}
+.ev-card--featured:has(.ev-photo) .ev-body{padding:32px 32px 32px 4px}
+.ev-card--featured::before{content:"Next up";position:absolute;top:16px;left:16px;z-index:1;padding:5px 12px;background:#fff;color:var(--ev-blue);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.ev-page h3.ev-title{font-size:clamp(24px,2.3vw,30px)}
+.ev-card--featured h3.ev-title{font-size:clamp(28px,3vw,40px)}
+article.ev-card--past{opacity:.78}
+article.ev-card--past .ev-tile{background:var(--ev-muted)}
+
+.ev-empty{padding:56px 24px;border:1px dashed var(--ev-line);text-align:center}
+.ev-empty[hidden]{display:none}
+.ev-empty h3{margin:0 0 8px;font:500 26px/1.2 var(--font-civic,"Space Grotesk",sans-serif);color:var(--ev-blue)}
+.ev-empty p{margin:0 auto 20px;color:var(--ev-muted)}
+.ev-partner{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px;margin-top:56px;padding:36px;background:var(--ev-soft);border-left:4px solid var(--ev-blue)}
+.ev-partner h3{margin:4px 0 8px;font:500 clamp(22px,2.4vw,30px)/1.2 var(--font-civic,"Space Grotesk",sans-serif);color:var(--ev-blue);max-width:28ch}
+.ev-partner p{margin:0;max-width:60ch}
+.ev-kicker{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ev-blue)}
+
+/* Event page */
+.evd{width:min(1200px,100% - 48px);margin:0 auto}
+.evd-hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:56px;align-items:center;padding:56px 0;border-bottom:1px solid var(--ev-line)}
+.evd-back{display:inline-block;margin-bottom:24px;font-size:14px;font-weight:700;text-decoration:none;color:var(--ev-blue)}
+.evd-back:hover{text-decoration:underline}
+.evd h1{margin:0 0 20px;font:500 clamp(40px,5.2vw,68px)/1.02 var(--font-civic,"Space Grotesk",sans-serif);letter-spacing:-.05em;color:var(--ev-blue)}
+.evd-lede{font-size:clamp(18px,1.9vw,22px);line-height:1.5;color:var(--ev-ink);margin:0;max-width:none}
+.evd-hero-art{position:relative}
+.evd-hero-art img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;filter:grayscale(1)}
+.evd .ev-tile--hero{position:absolute;left:-20px;bottom:-20px;min-width:120px;min-height:120px;box-shadow:0 16px 36px rgb(20 38 91 / 25%)}
+.evd:has(.ev-host--partner) .ev-tile--hero{background:var(--ev-amber)}
+.evd:has(.ev-host--community) .ev-tile--hero{background:var(--ev-green)}
+.evd-main{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:64px;align-items:start;padding:56px 0 72px}
+.evd-body{font-size:18px;line-height:1.75;color:var(--ev-ink)}
+.evd-body p,.evd-body ul{margin:0 0 1.2em;max-width:68ch}
+.evd-body a{color:var(--ev-blue)}
+.evd-note{padding:16px 20px;background:var(--ev-soft);border-left:4px solid var(--ev-muted);font-size:15px}
+.evd-card{position:sticky;top:24px;border:1px solid var(--ev-line);background:#fff;box-shadow:0 18px 40px rgb(20 38 91 / 8%)}
+.evd-card h2{margin:0;padding:20px 24px;background:var(--ev-blue);color:#fff;font:500 20px/1.2 var(--font-civic,"Space Grotesk",sans-serif)}
+.evd-card dl{margin:0;padding:8px 24px}
+.evd-card dl>div{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--ev-line);font-size:15px}
+.evd-card dl>div:last-child{border-bottom:0}
+.evd-card dt{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ev-muted);padding-top:3px}
+.evd-card dd{margin:0;color:var(--ev-ink)}
+.evd-actions{display:grid;gap:10px;padding:0 24px 24px}
+.evd-past{margin:0;color:var(--ev-muted);font-weight:600}
+.evd-more{padding:0 0 88px}
+.evd-more h2{margin:0 0 24px;font:500 clamp(28px,3vw,38px)/1.1 var(--font-civic,"Space Grotesk",sans-serif);color:var(--ev-blue)}
+
+@media (max-width:900px){
+  article.ev-card--featured:has(.ev-photo){grid-template-columns:112px minmax(0,1fr)}
+  .ev-card--featured .ev-photo{grid-column:1/-1;min-height:220px;max-height:280px}
+  .ev-card--featured:has(.ev-photo) .ev-tile{margin:24px 0 0 24px}
+  .ev-card--featured:has(.ev-photo) .ev-body{padding:24px 24px 28px 0}
+  .evd-hero,.evd-main{grid-template-columns:1fr}
+  .evd-card{position:static}
+  .evd .ev-tile--hero{left:16px;bottom:16px}
+}
+@media (max-width:600px){
+  .ev-seg{border-radius:16px;width:100%}
+  .ev-page .ev-seg button{flex:1 1 calc(50% - 6px);justify-content:center;padding:10px 12px}
+  article.ev-card{grid-template-columns:80px minmax(0,1fr);gap:0 16px;padding:20px}
+  .ev-tile{min-height:80px;padding:10px 4px}
+  .ev-tile span{font-size:10px;letter-spacing:.08em}
+  .ev-tile strong{font-size:24px}
+  article.ev-card--featured{padding:52px 20px 20px}
+  article.ev-card--featured:has(.ev-photo){grid-template-columns:80px minmax(0,1fr);padding:0}
+  .ev-card--featured:has(.ev-photo) .ev-tile{margin:20px 0 0 20px}
+  .ev-card--featured:has(.ev-photo) .ev-body{padding:20px 20px 24px 0}
+  ul.ev-facts li{grid-template-columns:1fr;gap:0}
+  .ev-partner{padding:24px}
+  .evd{width:calc(100% - 32px)}
+}
+.ev-card--featured:not(:has(.ev-photo))::before{background:var(--ev-soft)}

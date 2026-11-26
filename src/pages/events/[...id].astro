@@ -1,8 +1,65 @@
 ---
+import EventCard from '../../components/EventCard.astro';
 import Site from '../../layouts/Site.astro';
-import {getCollection,render} from 'astro:content';
-export async function getStaticPaths(){return (await getCollection('events',({data})=>!data.draft)).map(post=>({params:{id:post.id},props:{post}}));}
-const {post}=Astro.props; const {Content}=await render(post);
-const related=(await getCollection('events',({data})=>!data.draft)).filter(x=>x.id!==post.id).slice(0,3);
+import '../../styles/events.css';
+import { render } from 'astro:content';
+import { dateTile, hostLabel, icsHref, isPast, publishedEvents, type SiteEvent } from '../../lib/events';
+export async function getStaticPaths(){ return (await publishedEvents()).map(event=>({params:{id:event.id},props:{event}})); }
+const { event } = Astro.props as { event: SiteEvent };
+const { Content } = await render(event);
+const d = event.data;
+const tile = dateTile(event);
+const past = isPast(event);
+const calendar = icsHref(event, 'https://picturethis-production.com');
+const more = (await publishedEvents()).filter(x => x.id !== event.id && !isPast(x)).slice(0, 2);
 ---
-<Site title={post.data.title}><article><h1>{post.data.title}</h1><p>{post.data.author}</p>{post.data.photo && <figure><img loading="lazy" decoding="async" loading="lazy" decoding="async" src={post.data.photo} alt=""/><figcaption>{post.data.photo_caption}</figcaption></figure>}{post.data.pull_quote && <blockquote>{post.data.pull_quote}</blockquote>}<Content/><aside><a href="/get-involved/">Get involved</a></aside>{related.map(x=><p><a href={"/events/"+x.id+"/"}>{x.data.title}</a></p>)}</article></Site>
+<Site title={d.title} description={d.summary}>
+  <div class="evd">
+    <div class="evd-hero">
+      <div class="evd-hero-text">
+        <a class="evd-back" href="/events/">← All events</a>
+        <p class="ev-badges">
+          <span class:list={["ev-host", `ev-host--${d.host}`]}>{hostLabel(d.host, d.hostName)}</span>
+          <span class="ev-format">{d.format}</span>
+          {past && <span class="ev-format">Past</span>}
+        </p>
+        <h1>{d.title}</h1>
+        <p class="evd-lede">{d.summary}</p>
+      </div>
+      <div class="evd-hero-art">
+        {d.photo && <img src={d.photo} alt="" decoding="async"/>}
+        <div class="ev-tile ev-tile--hero" aria-hidden="true"><span>{tile.top}</span><strong>{tile.big}</strong><span>{tile.bottom}</span></div>
+      </div>
+    </div>
+
+    <div class="evd-main">
+      <div class="evd-body">
+        <Content/>
+        {d.host !== 'picturethis' && <p class="evd-note">{d.host === 'community' ? 'Community event' : 'Partner event'}: run by {d.hostName}, not PictureThis Production. Registration and questions go to them.</p>}
+      </div>
+      <aside class="evd-card" aria-labelledby="evd-details">
+        <h2 id="evd-details">Event details</h2>
+        <dl>
+          <div><dt>When</dt><dd>{d.dateLabel}{d.time && <><br/>{d.time}</>}</dd></div>
+          <div><dt>Where</dt><dd>{d.location}</dd></div>
+          {d.cost && <div><dt>Cost</dt><dd>{d.cost}</dd></div>}
+          {d.places && <div><dt>Places</dt><dd>{d.places}</dd></div>}
+          {d.audience && <div><dt>For</dt><dd>{d.audience}</dd></div>}
+          <div><dt>Host</dt><dd>{d.hostName}</dd></div>
+        </dl>
+        <div class="evd-actions">
+          {!past && d.cta && <a class="ev-cta" href={d.cta.href}>{d.cta.label}</a>}
+          {!past && calendar && <a class="ev-link-button" href={calendar} download={`${event.id}.ics`}>Add to calendar</a>}
+          {past && <p class="evd-past">This event has finished.</p>}
+        </div>
+      </aside>
+    </div>
+
+    {more.length > 0 && (
+      <section class="evd-more" aria-labelledby="evd-more-title">
+        <h2 id="evd-more-title">More events</h2>
+        <div class="ev-list">{more.map(x => <EventCard event={x}/>)}</div>
+      </section>
+    )}
+  </div>
+</Site>
