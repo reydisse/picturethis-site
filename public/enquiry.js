@@ -61,8 +61,8 @@ document.querySelectorAll('[data-enquiry-form]').forEach((form) => {
         method: 'POST', headers: {'Content-Type': 'application/json', Accept: 'application/json'}, body: JSON.stringify(payload)
       });
       const result = await response.json().catch(() => ({}));
-      // FormSubmit answers 200 with success "false" when, for example, the inbox has not
-      // activated the form yet. Keep its reason for the site owner in the console.
+      // The endpoint can refuse a submission (validation, or the mail service failing).
+      // Keep its reason for the site owner in the console.
       if (!response.ok || (result.success !== true && result.success !== 'true')) throw new Error(result.message || `HTTP ${response.status}`);
       const message = form.dataset.success ?? 'Thank you! Your enquiry has been sent. We look forward to being in touch.';
       if (success) {
