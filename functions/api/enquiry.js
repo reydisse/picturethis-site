@@ -73,8 +73,10 @@ export async function onRequest({ request, env }) {
 
 const acknowledgementHeader = `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no,address=no,date=no,email=no">
+<meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@700&family=DM+Sans:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-<style>a{color:#2438A0}@media (max-width:620px){.px{padding-left:24px!important;padding-right:24px!important}.h1{font-size:32px!important}}</style></head>
+<style>:root{color-scheme:light;supported-color-schemes:light}a{color:#2438A0}a[x-apple-data-detectors]{color:inherit!important;text-decoration:none!important;font-size:inherit!important;font-family:inherit!important;font-weight:inherit!important;line-height:inherit!important}@media (max-width:620px){.px{padding-left:24px!important;padding-right:24px!important}.h1{font-size:32px!important}}</style></head>
 <body style="margin:0;padding:0;background-color:#E4E7F4;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#E4E7F4;"><tr><td align="center" style="padding:24px 8px;">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color:#FFFFFF;max-width:600px;width:100%;"><tr><td class="px" style="background-color:#2438A0;padding:36px 48px;font-family:'Archivo Narrow','Arial Narrow',Arial,sans-serif;font-weight:700;text-transform:uppercase;line-height:0.95;font-size:34px;color:#FFFFFF;">PictureThis<br>Production</td></tr><tr><td class="px" style="padding:44px 48px 0;font-family:'DM Sans',Arial,sans-serif;">
@@ -86,7 +88,7 @@ const acknowledgementFooter = `</td></tr><tr><td class="px" style="padding:30px 
 <div><a href="mailto:hello@picturethis-production.com" style="color:#2438A0;">hello@picturethis-production.com</a></div>
 </td></tr><tr><td class="px" style="background-color:#1B2455;padding:36px 48px;font-family:'DM Sans',Arial,sans-serif;">
 <div style="font-family:'Archivo Narrow','Arial Narrow',Arial,sans-serif;font-weight:700;text-transform:uppercase;line-height:0.95;font-size:22px;color:#FFFFFF;">PictureThis<br>Production</div>
-<div style="font-size:14px;line-height:1.6;color:#C8CEEA;padding-top:14px;">139 Millwick Dr, Toronto, ON M9L 1Y7 &middot; <a href="https://picturethis-production.com" style="color:#FFFFFF;">picturethis-production.com</a></div>
+<div style="font-size:14px;line-height:1.6;color:#C8CEEA;padding-top:14px;"><a href="https://maps.google.com/?q=139+Millwick+Dr,+Toronto,+ON+M9L+1Y7" style="color:#C8CEEA;text-decoration:none;">139 Millwick Dr, Toronto, ON M9L 1Y7</a> &middot; <a href="https://picturethis-production.com" style="color:#FFFFFF;">picturethis-production.com</a></div>
 <div style="font-size:14px;font-weight:700;letter-spacing:0.06em;color:#FFFFFF;padding-top:12px;">Free training. Real shows. A real path into the industry.</div>
 </td></tr>
 </table></td></tr></table>
@@ -97,8 +99,10 @@ const acknowledgementCopy = {
     subject: 'We got your application',
     html: `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no,address=no,date=no,email=no">
+<meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@700&family=DM+Sans:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-<style>a{color:#2438A0}@media (max-width:620px){.px{padding-left:24px!important;padding-right:24px!important}.h1{font-size:32px!important}}</style></head>
+<style>:root{color-scheme:light;supported-color-schemes:light}a{color:#2438A0}a[x-apple-data-detectors]{color:inherit!important;text-decoration:none!important;font-size:inherit!important;font-family:inherit!important;font-weight:inherit!important;line-height:inherit!important}@media (max-width:620px){.px{padding-left:24px!important;padding-right:24px!important}.h1{font-size:32px!important}}</style></head>
 <body style="margin:0;padding:0;background-color:#E4E7F4;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#E4E7F4;"><tr><td align="center" style="padding:24px 8px;">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color:#FFFFFF;max-width:600px;width:100%;"><tr><td class="px" style="background-color:#2438A0;padding:36px 48px;font-family:'Archivo Narrow','Arial Narrow',Arial,sans-serif;font-weight:700;text-transform:uppercase;line-height:0.95;font-size:34px;color:#FFFFFF;">PictureThis<br>Production</td></tr><tr><td class="px" style="padding:44px 48px 0;font-family:'DM Sans',Arial,sans-serif;">
@@ -118,13 +122,13 @@ const acknowledgementCopy = {
 </tr></table></td></tr></table>
 </td></tr><tr><td class="px" style="padding:34px 48px 0;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#EEF0F8;"><tr><td style="padding:26px 28px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td width="33%" valign="top" style="font-family:'DM Sans',Arial,sans-serif;padding-right:12px;"><div style="font-family:'Space Grotesk',Arial,sans-serif;font-weight:500;font-size:38px;line-height:1;color:#2438A0;">20</div><div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#5A607A;line-height:1.4;padding-top:6px;">Places in January</div></td><td width="33%" valign="top" style="font-family:'DM Sans',Arial,sans-serif;padding-right:12px;"><div style="font-family:'Space Grotesk',Arial,sans-serif;font-weight:500;font-size:38px;line-height:1;color:#2438A0;">8</div><div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#5A607A;line-height:1.4;padding-top:6px;">Saturdays, 10 AM–2 PM</div></td><td width="33%" valign="top" style="font-family:'DM Sans',Arial,sans-serif;padding-right:12px;"><div style="font-family:'Space Grotesk',Arial,sans-serif;font-weight:500;font-size:38px;line-height:1;color:#2438A0;">$0</div><div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#5A607A;line-height:1.4;padding-top:6px;">Free, always</div></td></tr></table></td></tr></table>
-<div style="font-size:15px;line-height:1.6;color:#5A607A;padding-top:14px;font-family:'DM Sans',Arial,sans-serif;">At 139 Millwick Dr, Toronto. Real gear, beside working technicians. No experience needed.</div></td></tr><tr><td class="px" style="padding:18px 48px 0;font-family:'DM Sans',Arial,sans-serif;"><p style="margin:0 0 14px 0;font-size:17px;line-height:1.65;color:#2B3263;">If you applied for someone else, or your plans change, just reply to this email.</p></td></tr><tr><td class="px" style="padding:30px 48px 42px;font-family:'DM Sans',Arial,sans-serif;font-size:17px;line-height:1.55;color:#1B2455;">
+<div style="font-size:15px;line-height:1.6;color:#5A607A;padding-top:14px;font-family:'DM Sans',Arial,sans-serif;">At <a href="https://maps.google.com/?q=139+Millwick+Dr,+Toronto,+ON+M9L+1Y7" style="color:#5A607A;text-decoration:none;">139 Millwick Dr, Toronto</a>. Real gear, beside working technicians. No experience needed.</div></td></tr><tr><td class="px" style="padding:18px 48px 0;font-family:'DM Sans',Arial,sans-serif;"><p style="margin:0 0 14px 0;font-size:17px;line-height:1.65;color:#2B3263;">If you applied for someone else, or your plans change, just reply to this email.</p></td></tr><tr><td class="px" style="padding:30px 48px 42px;font-family:'DM Sans',Arial,sans-serif;font-size:17px;line-height:1.55;color:#1B2455;">
 <div>Talk soon,</div>
 <div style="font-weight:700;">The PictureThis Production team</div>
 <div><a href="mailto:hello@picturethis-production.com" style="color:#2438A0;">hello@picturethis-production.com</a></div>
 </td></tr><tr><td class="px" style="background-color:#1B2455;padding:36px 48px;font-family:'DM Sans',Arial,sans-serif;">
 <div style="font-family:'Archivo Narrow','Arial Narrow',Arial,sans-serif;font-weight:700;text-transform:uppercase;line-height:0.95;font-size:22px;color:#FFFFFF;">PictureThis<br>Production</div>
-<div style="font-size:14px;line-height:1.6;color:#C8CEEA;padding-top:14px;">139 Millwick Dr, Toronto, ON M9L 1Y7 &middot; <a href="https://picturethis-production.com" style="color:#FFFFFF;">picturethis-production.com</a></div>
+<div style="font-size:14px;line-height:1.6;color:#C8CEEA;padding-top:14px;"><a href="https://maps.google.com/?q=139+Millwick+Dr,+Toronto,+ON+M9L+1Y7" style="color:#C8CEEA;text-decoration:none;">139 Millwick Dr, Toronto, ON M9L 1Y7</a> &middot; <a href="https://picturethis-production.com" style="color:#FFFFFF;">picturethis-production.com</a></div>
 <div style="font-size:14px;font-weight:700;letter-spacing:0.06em;color:#FFFFFF;padding-top:12px;">Free training. Real shows. A real path into the industry.</div>
 </td></tr>
 </table></td></tr></table>
@@ -154,8 +158,10 @@ Free training. Real shows. A real path into the industry.`,
     subject: 'Thanks for offering to mentor',
     html: `<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="format-detection" content="telephone=no,address=no,date=no,email=no">
+<meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@700&family=DM+Sans:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-<style>a{color:#2438A0}@media (max-width:620px){.px{padding-left:24px!important;padding-right:24px!important}.h1{font-size:32px!important}}</style></head>
+<style>:root{color-scheme:light;supported-color-schemes:light}a{color:#2438A0}a[x-apple-data-detectors]{color:inherit!important;text-decoration:none!important;font-size:inherit!important;font-family:inherit!important;font-weight:inherit!important;line-height:inherit!important}@media (max-width:620px){.px{padding-left:24px!important;padding-right:24px!important}.h1{font-size:32px!important}}</style></head>
 <body style="margin:0;padding:0;background-color:#E4E7F4;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#E4E7F4;"><tr><td align="center" style="padding:24px 8px;">
 <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color:#FFFFFF;max-width:600px;width:100%;"><tr><td class="px" style="background-color:#2438A0;padding:36px 48px;font-family:'Archivo Narrow','Arial Narrow',Arial,sans-serif;font-weight:700;text-transform:uppercase;line-height:0.95;font-size:34px;color:#FFFFFF;">PictureThis<br>Production</td></tr><tr><td class="px" style="padding:44px 48px 0;font-family:'DM Sans',Arial,sans-serif;">
@@ -181,7 +187,7 @@ Free training. Real shows. A real path into the industry.`,
 <div><a href="mailto:hello@picturethis-production.com" style="color:#2438A0;">hello@picturethis-production.com</a></div>
 </td></tr><tr><td class="px" style="background-color:#1B2455;padding:36px 48px;font-family:'DM Sans',Arial,sans-serif;">
 <div style="font-family:'Archivo Narrow','Arial Narrow',Arial,sans-serif;font-weight:700;text-transform:uppercase;line-height:0.95;font-size:22px;color:#FFFFFF;">PictureThis<br>Production</div>
-<div style="font-size:14px;line-height:1.6;color:#C8CEEA;padding-top:14px;">139 Millwick Dr, Toronto, ON M9L 1Y7 &middot; <a href="https://picturethis-production.com" style="color:#FFFFFF;">picturethis-production.com</a></div>
+<div style="font-size:14px;line-height:1.6;color:#C8CEEA;padding-top:14px;"><a href="https://maps.google.com/?q=139+Millwick+Dr,+Toronto,+ON+M9L+1Y7" style="color:#C8CEEA;text-decoration:none;">139 Millwick Dr, Toronto, ON M9L 1Y7</a> &middot; <a href="https://picturethis-production.com" style="color:#FFFFFF;">picturethis-production.com</a></div>
 <div style="font-size:14px;font-weight:700;letter-spacing:0.06em;color:#FFFFFF;padding-top:12px;">Free training. Real shows. A real path into the industry.</div>
 </td></tr>
 </table></td></tr></table>
@@ -211,7 +217,7 @@ Free training. Real shows. A real path into the industry.`,
     html: `${acknowledgementHeader}<div style="font-size:13px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#2438A0;">Equipment offer received</div>
 <div class="h1" style="font-family:'Space Grotesk',Arial,sans-serif;font-weight:500;font-size:42px;line-height:1.08;color:#2438A0;padding-top:14px;">Thanks for offering equipment, {{FIRST_NAME}}.</div>
 </td></tr><tr><td class="px" style="padding:18px 48px 0;font-family:'DM Sans',Arial,sans-serif;font-size:17px;line-height:1.65;color:#2B3263;">
-<p>We’ll check whether we can use your gear. If we can, we’ll arrange a drop-off at 139 Millwick Dr or a pickup. When we receive it, we’ll log the donation and send you a written acknowledgement.</p>
+<p>We’ll check whether we can use your gear. If we can, we’ll arrange a drop-off at <a href="https://maps.google.com/?q=139+Millwick+Dr,+Toronto,+ON+M9L+1Y7" style="color:#2B3263;text-decoration:none;">139 Millwick Dr</a> or a pickup. When we receive it, we’ll log the donation and send you a written acknowledgement.</p>
 <p>PictureThis is a nonprofit. We aren’t a registered charity, so we can’t issue a tax receipt for donated equipment.</p>
 ${acknowledgementFooter}`,
     text: `Thanks for offering equipment, {{FIRST_NAME}}.
