@@ -1,0 +1,16 @@
+---
+import { formatDate, readingMinutes, type Post } from "../lib/blog";
+const { post, headingLevel = 2 } = Astro.props as { post: Post; headingLevel?: 2 | 3 };
+const { title, summary, date, photo } = post.data;
+const Heading = `h${headingLevel}` as "h2" | "h3";
+const published = formatDate(date);
+---
+<article class="post-card">
+  <a class="post-card-link" href={`/blog/${post.id}/`}>
+    {photo && <img class="post-card-photo" src={photo} alt="" loading="lazy" decoding="async"/>}
+    <p class="post-card-meta">{published && <time datetime={date!.toISOString().slice(0, 10)}>{published}</time>}{published && " · "}{readingMinutes(post)} min read</p>
+    <Heading class="post-card-title">{title}</Heading>
+    {summary && <p class="post-card-summary">{summary}</p>}
+    <span class="post-card-cta">Read the article<span aria-hidden="true"> →</span></span>
+  </a>
+</article>

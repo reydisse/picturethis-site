@@ -3,19 +3,23 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import '../styles/doop.css';
 import enquiryForm from '../design/enquiry-form.html?raw';
-const {title,design}=Astro.props;
+import { withEnquiryConfig } from '../lib/enquiry';
+const {title,design,description}=Astro.props;
 ---
-<!doctype html><html lang="en-CA"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="icon" href="/favicon.ico" sizes="any"/><link rel="icon" type="image/png" href="/favicon.png" sizes="32x32"/><link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180"/><title>{title} | PictureThis Production</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"/><style set:html={design.css}/><link rel="stylesheet" href="/responsive.css"/><link rel="stylesheet" href="/enquiry.css"/></head><body id="top"><a class="skip" href="#main">Skip to content</a><SiteHeader/><main id="main" set:html={design.html.replace('<!-- enquiry-form -->', () => enquiryForm)}/><SiteFooter/><script is:inline>document.querySelectorAll('.faq-q').forEach(b=>b.addEventListener('click',()=>{const p=b.closest('.faq');const open=p.dataset.state!=='open';p.dataset.state=open?'open':'closed';b.setAttribute('aria-expanded',String(open))}));</script></body></html>
+<!doctype html><html lang="en-CA"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><link rel="icon" href="/favicon.ico" sizes="any"/><link rel="icon" type="image/png" href="/favicon.png" sizes="32x32"/><link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180"/><title>{title} | PictureThis Production</title>{description && <meta name="description" content={description}/>}<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"/><style set:html={design.css}/><link rel="stylesheet" href="/responsive.css"/><link rel="stylesheet" href="/enquiry.css"/></head><body id="top"><a class="skip" href="#main">Skip to content</a><SiteHeader/><main id="main" set:html={withEnquiryConfig(design.html.replace('<!-- enquiry-form -->', () => enquiryForm))}/><SiteFooter/><script is:inline>document.querySelectorAll('.faq-q').forEach(b=>b.addEventListener('click',()=>{const p=b.closest('.faq');const open=p.dataset.state!=='open';p.dataset.state=open?'open':'closed';b.setAttribute('aria-expanded',String(open))}));</script>
 <script is:inline>
+// Gift picker (Get Involved): the chosen amount carries through to the Donate page.
 document.querySelectorAll('section:has(.amt)').forEach(section => {
  const buttons = [...section.querySelectorAll('.amt')];
  const input = section.querySelector('input[inputmode="decimal"]');
- const label = section.querySelector('a[href="/donate/"] span');
+ const link = section.querySelector('a[href^="/donate/"]');
+ const label = link.querySelector('span');
  const summary = document.createElement('p');
  summary.setAttribute('aria-live', 'polite');
- label.parentElement.parentElement.after(summary);
+ link.parentElement.after(summary);
  const update = (amount, impact) => {
   label.textContent = amount > 0 ? `Donate $${amount.toLocaleString('en-CA', {maximumFractionDigits:2})}` : 'Choose a gift amount';
+  link.href = amount > 0 ? `/donate/?amount=${encodeURIComponent(amount)}#pledge` : '/donate/#pledge';
   summary.textContent = impact;
  };
  buttons.forEach(button => button.addEventListener('click', () => {
@@ -31,4 +35,4 @@ document.querySelectorAll('section:has(.amt)').forEach(section => {
  const selected = buttons.find(b => b.dataset.state === 'selected');
  if (selected) selected.click();
 });
-</script>
+</script></body></html>

@@ -1,36 +1,56 @@
 ---
+import PageHero from "../components/PageHero.astro";
 import Site from '../layouts/Site.astro';
+
+const audiences = [
+  ["Young people, 16 to 29.", "Our cohort program: eight weeks of free training on real shows. Applications are open for January."],
+  ["People rebuilding.", "If you are coming out of the justice system and rebuilding, there is a place for you on a crew: a trade, a mentor, and a fresh reference."],
+  ["People in recovery.", "Structured training, a sober crew, and a path to paid work while you get your life back."],
+  ["Women.", "Technical production is still mostly men. We are making room, on purpose."],
+  ["Children and families.", "Age-appropriate production experiences for children, always with a parent or guardian present."],
+  ["People with disabilities.", "Training, roles, and venues adapted so you can actually do the work, not just watch it."],
+  ["Our communities.", "We do outreach in Black, Ghanaian, and French-speaking communities, in the places people already gather."],
+];
 ---
-<Site title="About">
-  <section>
-    <h1>About PictureThis Production</h1>
-    <h2>Mission</h2>
-    <p>PictureThis Production opens the door to live production careers. We offer free, hands-on training and mentorship in sound, cameras, lighting, and streaming, learned on real shows beside working technicians. Everyone who trains with us leaves with a trade, a reference, and a path into paid work.</p>
-    <h2>Vision</h2>
-    <p>A Toronto where young people build their future together, not on the streets, but as a crew: learning skills, earning a living, and looking out for one another.</p>
+<Site title="About" description="Our mission, our vision, and who PictureThis Production is for: free live-production training for communities the industry rarely reaches.">
+  <PageHero eyebrow="About" title="PictureThis Production"/>
+  <section class="about-intro" aria-label="Mission and vision">
+    <div>
+      <h2 class="eyebrow">Mission</h2>
+      <p>PictureThis Production opens the door to live production careers. We offer free, hands-on training and mentorship in sound, cameras, lighting, and streaming, learned on real shows beside working technicians. Everyone who trains with us leaves with a trade, a reference, and a path into paid work.</p>
+    </div>
+    <div>
+      <h2 class="eyebrow">Vision</h2>
+      <p>A Toronto where young people build their future together, not on the streets, but as a crew: learning skills, earning a living, and looking out for one another.</p>
+    </div>
   </section>
-  <section id="who-this-is-for">
-    <h2>Who this is for</h2>
-    <p>Our cohorts are built for people the industry rarely reaches: young people ages 16 to 29 from under-resourced neighbourhoods, people rebuilding after the justice system or in recovery, women, families, and people with disabilities, with outreach in Black, Ghanaian, and French-speaking communities.</p>
-    <ul>
-      <li><strong>Young people, 16 to 29.</strong> Our cohort program: eight weeks of free training on real shows. Applications are open for January.</li>
-      <li><strong>People rebuilding.</strong> If you are coming out of the justice system and rebuilding, there is a place for you on a crew: a trade, a mentor, and a fresh reference.</li>
-      <li><strong>People in recovery.</strong> Structured training, a sober crew, and a path to paid work while you get your life back.</li>
-      <li><strong>Women.</strong> Technical production is still mostly men. We are making room, on purpose.</li>
-      <li><strong>Children and families.</strong> Age-appropriate production experiences for children, always with a parent or guardian present.</li>
-      <li><strong>People with disabilities.</strong> Training, roles, and venues adapted so you can actually do the work, not just watch it.</li>
-      <li><strong>Our communities.</strong> We do outreach in Black, Ghanaian, and French-speaking communities, in the places people already gather.</li>
+  <section id="who-this-is-for" class="about-who" aria-labelledby="who-title">
+    <div class="about-who-head">
+      <h2 id="who-title">Who this is for</h2>
+      <p>Our cohorts are built for people the industry rarely reaches: young people ages 16 to 29 from under-resourced neighbourhoods, people rebuilding after the justice system or in recovery, women, families, and people with disabilities, with outreach in Black, Ghanaian, and French-speaking communities.</p>
+    </div>
+    <ul class="about-audiences">
+      {audiences.map(([title, text]) => <li><h3>{title}</h3><p>{text}</p></li>)}
     </ul>
-    <p>One cohort, every community. The January cohort is open to anyone on this list. If you see yourself here, apply.</p>
+    <p class="about-close">One cohort, every community. The January cohort is open to anyone on this list. If you see yourself here, <a href="/get-involved/#join">apply</a>.</p>
   </section>
 </Site>
 
 <style>
-  section p, section ul {
-    max-width: 72ch;
-  }
-
-  li + li {
-    margin-top: 8px;
+  .about-intro{display:grid;grid-template-columns:1fr 1fr;gap:32px 64px}
+  /* doop.css forces every h2 to 28px on phones; these are small section labels. */
+  .about-intro .eyebrow{font:700 13px/1.4 var(--font-ngo);font-size:13px!important;line-height:1.4!important;letter-spacing:.1em;text-transform:uppercase;margin:0 0 16px;color:var(--color-civic)}
+  .about-intro p{font-size:clamp(18px,1.6vw,22px);line-height:1.55;margin:0;max-width:52ch}
+  .about-who-head{max-width:72ch}
+  .about-who-head h2{margin:0 0 16px}
+  .about-who-head p{margin:0}
+  .about-audiences{list-style:none;padding:0;margin:40px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 48px}
+  .about-audiences li{border-top:1px solid var(--color-civic-line);padding:20px 0 24px}
+  .about-audiences h3{margin:0 0 8px;font-size:20px}
+  .about-audiences p{margin:0;max-width:56ch}
+  .about-close{margin:32px 0 0;font-weight:600;max-width:72ch}
+  @media (max-width:800px){
+    .about-intro,.about-audiences{grid-template-columns:1fr}
+    .about-audiences{margin-top:24px}
   }
 </style>

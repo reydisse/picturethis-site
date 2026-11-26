@@ -1,8 +1,67 @@
 ---
-import html from "../design/footer.html?raw";
+// One footer for every page, including Home (it is Home's design).
+import { contactEmail } from "../config";
+const explore = [["Home", "/"], ["Programs", "/programs/"], ["Faithfire", "/faithfire/"], ["Projects", "/projects/"], ["Blog", "/blog/"], ["Events", "/events/"], ["Careers", "/careers/"]];
+const involved = [["Become a mentor", "/get-involved/#join"], ["Partners", "/partners/"], ["Donate", "/donate/"], ["FAQ", "/get-involved/#faq"]];
 ---
-<Fragment set:html={html}/>
+<footer class="pt-ft" aria-label="Site footer">
+  <div class="pt-ft-grid">
+    <div class="pt-ft-about">
+      <a class="pt-ft-mark" href="/">PICTURETHIS<br/>PRODUCTION</a>
+      <p>Training. Mentoring. Real crews.<br/>Free, hands-on production training across the Greater Toronto Area.</p>
+      <p class="pt-ft-muted pt-ft-small">PictureThis is being set up as a nonprofit organization in Ontario.</p>
+    </div>
+    <nav aria-label="Explore">
+      <h2>Explore</h2>
+      <ul>{explore.map(([label, href]) => <li><a href={href}>{label}</a></li>)}</ul>
+    </nav>
+    <nav aria-label="Get involved">
+      <h2>Get involved</h2>
+      <ul>{involved.map(([label, href]) => <li><a href={href}>{label}</a></li>)}</ul>
+    </nav>
+    <div class="pt-ft-contact">
+      <h2>Contact</h2>
+      <p>Greater Toronto Area<br/>Ontario, Canada</p>
+      <a class="pt-ft-email" href={`mailto:${contactEmail}`}><svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24" width="18"><rect height="16" width="20" x="2" y="4"></rect><path d="m22 7-10 6L2 7"></path></svg>{contactEmail}</a>
+      <p class="pt-ft-muted pt-ft-small">Enquiries sent through our forms reach our team by email. <a href="/policies/#privacy">How we use them</a>.</p>
+    </div>
+  </div>
+  <div class="pt-ft-legal">
+    <span><a href="/policies/">Policies</a> · © PictureThis Production. All rights reserved.</span>
+    <span>Illustrative stock imagery, not actual participants.</span>
+    <a href="#top">Back to top</a>
+  </div>
+</footer>
 <style is:global>
-footer[aria-label="Site footer"], footer[aria-label="Site footer"] * { color: #fff !important; }
-footer[aria-label="Site footer"] a:hover, footer[aria-label="Site footer"] a:focus-visible { color: #e4edff !important; text-decoration: underline; }
+.pt-ft{background:#14265B;color:#FFFFFF;padding:56px 72px 32px;margin:0;border:0;font:16px/1.6 "DM Sans",sans-serif;text-align:left}
+.pt-ft *{box-sizing:border-box}
+.pt-ft p{margin:0;color:inherit;max-width:none}
+.pt-ft a{color:inherit}
+.pt-ft-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:48px}
+.pt-ft .pt-ft-mark{display:inline-block;font:700 24px/1.05 "Space Grotesk",sans-serif;letter-spacing:-.01em;text-decoration:none;margin:0;padding:0;max-width:none}
+.pt-ft-about p{margin-top:16px;max-width:300px}
+.pt-ft .pt-ft-muted{color:#CCD5ED}
+.pt-ft .pt-ft-small{font-size:13px;line-height:1.5}
+.pt-ft h2{font:700 13px/1.4 "DM Sans",sans-serif!important;letter-spacing:.12em;text-transform:uppercase;color:#CCD5ED;margin:0 0 8px}
+.pt-ft nav{display:block;margin:0;padding:0}
+.pt-ft ul{list-style:none;margin:0;padding:0}
+.pt-ft li a{display:inline-flex;align-items:center;min-height:32px;padding:0;border:0;text-decoration:none}
+.pt-ft li a:hover,.pt-ft li a:focus-visible{text-decoration:underline;text-underline-offset:5px}
+.pt-ft-contact p{margin-bottom:4px}
+.pt-ft .pt-ft-email{display:inline-flex;align-items:center;gap:8px;min-height:48px;font-weight:600;text-underline-offset:5px;overflow-wrap:anywhere}
+.pt-ft .pt-ft-email svg{flex:none}
+.pt-ft-contact .pt-ft-small{margin-top:8px}
+.pt-ft-legal{display:flex;justify-content:space-between;align-items:center;gap:16px 32px;flex-wrap:wrap;margin-top:48px;padding-top:16px;border-top:1px solid rgba(255,255,255,.3);font-size:13px;color:#CCD5ED}
+.pt-ft-legal a{text-underline-offset:4px}
+.pt-ft :focus-visible{outline:3px solid #FFFFFF;outline-offset:3px}
+@media (max-width:999px){
+  .pt-ft{padding:48px 24px 40px}
+  .pt-ft-grid{grid-template-columns:1fr 1fr;gap:32px 24px}
+  .pt-ft-about,.pt-ft-contact{grid-column:1/-1}
+  .pt-ft .pt-ft-mark{font-size:20px}
+  .pt-ft li a{min-height:44px}
+  .pt-ft-legal{flex-direction:column;align-items:flex-start;margin-top:32px}
+  /* Home keeps a fixed "Apply" bar at the bottom on phones. */
+  .home .pt-ft{padding-bottom:128px}
+}
 </style>

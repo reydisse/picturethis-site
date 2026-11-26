@@ -5,7 +5,9 @@ import menu from '../design/home-menu.html?raw';
 import DonateDialog from '../components/DonateDialog.astro';
 import enquiry from '../design/home-enquiry.html?raw';
 import enquiryForm from '../design/enquiry-form.html?raw';
+import { withEnquiryConfig } from '../lib/enquiry';
 import '../styles/home.css';
+import SiteFooter from '../components/SiteFooter.astro';
 ---
 <!doctype html>
 <html lang="en-CA">
@@ -13,6 +15,7 @@ import '../styles/home.css';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Home | PictureThis Production</title>
+    <meta name="description" content="Free, hands-on training and mentoring in sound, cameras, lighting and streaming across the Greater Toronto Area. Eight Saturdays, real gear, real crews." />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -24,9 +27,10 @@ import '../styles/home.css';
     <a class="skip-link skip-mobile" href="#main-mobile">Skip to content</a>
     <div class="home-desktop" set:html={desktop} />
     <div class="home-mobile" set:html={mobile} />
+    <SiteFooter />
     <Fragment set:html={menu} />
     <DonateDialog />
-    <Fragment set:html={enquiry.replace('<!-- enquiry-form -->', () => enquiryForm)} />
+    <Fragment set:html={withEnquiryConfig(enquiry.replace('<!-- enquiry-form -->', () => enquiryForm))} />
     <script>
       import { initializeTestimonials } from '../scripts/testimonials';
       document.querySelectorAll<HTMLElement>('[data-testimonial-track]').forEach(initializeTestimonials);
