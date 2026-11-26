@@ -51,6 +51,11 @@ const count = (list: typeof events, host?: string) => list.filter((e) => !host |
       {past.map((e) => <EventCard event={e}/>)}
     </div>
 
+    <div class="ev-more" data-ev-more hidden>
+      <p class="ev-more-note" data-more-note></p>
+      <button type="button" class="ev-link-button" data-more>Show more events</button>
+    </div>
+
     <div class="ev-empty" data-ev-empty hidden>
       <h3 data-empty-title>No events here yet.</h3>
       <p data-empty-text>Check back soon, or see all events.</p>
@@ -87,12 +92,17 @@ const count = (list: typeof events, host?: string) => list.filter((e) => !host |
       when: params.get('when') === 'past' ? 'past' : 'upcoming',
       q: params.get('q') ?? '',
       formats: new Set(params.getAll('format')),
+      limit: 0,
     };
+    // Long lists come in batches; filters and search still look through every event.
+    const PAGE = 6;
+    const more = root.querySelector('[data-ev-more]');
     q.value = state.q;
     controls.hidden = false;
 
     const labels = { all: 'events', picturethis: 'PictureThis events', partner: 'partner events', community: 'community events' };
-    function apply() {
+    function apply({ keepLimit = false } = {}) {
+      if (!keepLimit) state.limit = PAGE;
       const term = state.q.trim().toLowerCase();
       const inTime = (c) => (c.dataset.past === 'true') === (state.when === 'past');
       const base = cards.filter((c) => inTime(c)
@@ -102,9 +112,32 @@ const count = (list: typeof events, host?: string) => list.filter((e) => !host |
         root.querySelector(`[data-count="${key}"]`).textContent = base.filter((c) => key === 'all' || c.dataset.host === key).length;
       }
       const shown = base.filter((c) => state.show === 'all' || c.dataset.host === state.show);
-      const ordered = state.when === 'past' ? shown.slice().reverse() : shown;
+      // Past: most recent first. Upcoming keeps the built order (soonest first, undated last).
+      const ordered = state.when === 'past' ? shown.slice().sort((a, b) => b.dataset.last.localeCompare(a.dataset.last)) : shown;
       cards.forEach((c) => { c.hidden = true; c.classList.remove('ev-card--featured'); });
-      ordered.forEach((c, i) => { c.hidden = false; list.append(c); if (i === 0 && state.when === 'upcoming') c.classList.add('ev-card--featured'); });
+      list.querySelectorAll('.ev-month').forEach((h) => h.remove());
+      const visible = ordered.slice(0, state.limit);
+      let month = null;
+      visible.forEach((c, i) => {
+        c.hidden = false;
+        const featured = i === 0 && state.when === 'upcoming';
+        if (featured) c.classList.add('ev-card--featured');
+        // Month headings break up long lists; the "Next up" card sits above them.
+        else if (c.dataset.month !== month && ordered.length > 2) {
+          month = c.dataset.month;
+          const heading = document.createElement('h3');
+          heading.className = 'ev-month';
+          heading.textContent = c.dataset.monthLabel;
+          list.append(heading);
+        }
+        list.append(c);
+      });
+      const remaining = ordered.length - visible.length;
+      more.hidden = remaining <= 0;
+      if (remaining > 0) {
+        root.querySelector('[data-more-note]').textContent = `Showing ${visible.length} of ${ordered.length}`;
+        root.querySelector('[data-more]').textContent = `Show ${Math.min(PAGE, remaining)} more ${remaining === 1 ? 'event' : 'events'}`;
+      }
       empty.hidden = shown.length > 0;
       const noun = shown.length === 1 ? labels[state.show].replace(/s$/, '') : labels[state.show];
       countEl.textContent = `${shown.length} ${state.when} ${noun}`;
@@ -124,6 +157,14 @@ const count = (list: typeof events, host?: string) => list.filter((e) => !host |
       state.formats.forEach((f) => next.append('format', f));
       history.replaceState(null, '', `${location.pathname}${next.toString() ? `?${next}` : ''}${location.hash}`);
     }
+    root.querySelector('[data-more]').addEventListener('click', () => {
+      const before = cards.filter((c) => !c.hidden).length;
+      state.limit += PAGE;
+      apply({ keepLimit: true });
+      // Move keyboard and screen-reader focus to the first newly shown event.
+      const fresh = [...list.querySelectorAll('[data-event]')].filter((c) => !c.hidden)[before];
+      fresh?.querySelector('.ev-title a')?.focus();
+    });
     root.querySelectorAll('[data-show]').forEach((b) => b.addEventListener('click', () => { state.show = b.dataset.show; apply(); }));
     root.querySelectorAll('[data-when]').forEach((b) => b.addEventListener('click', () => { state.when = b.dataset.when; apply(); }));
     root.querySelectorAll('.ev-chips [data-format]').forEach((b) => b.addEventListener('click', () => {
